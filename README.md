@@ -6,7 +6,7 @@
 # Enter your Lend or Due Money to different people
 # Track the amount using visual charts.
 
-#Currently working on:
+# Currently working on:
 - Managing Monthly expenses
 - Adding daily expense limit
 - Push Notification for reminder of payment receiving or paying.
