@@ -24,7 +24,7 @@ class ExpenseCard extends StatelessWidget {
           child: Icon(icons[exp.category]),
         ),
         title: Text(exp.title),
-        subtitle: Text((DateFormat('MMMM dd, yyyy').format(exp.date))+"\n"+exp.notes),
+        subtitle: Text("${DateFormat('MMMM dd, yyyy').format(exp.date)}\n${exp.notes}"),
         //subtitle: Text(DateFormat('MMMM dd, yyyy').format(exp.date)),
         onLongPress: () => {ConfirmBox(exp: exp)},
         trailing: Text(NumberFormat.currency(locale: 'en_IN', symbol: '₹')

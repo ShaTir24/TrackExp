@@ -310,9 +310,8 @@ class DatabaseProvider with ChangeNotifier {
         // remove from in-app memory too
         _expenses.removeWhere((element) => element.id == expId);
         notifyListeners();
-        // we have to update the entries and totalamount too
-
-        var ex = findTxCategory(category);
+        // we have to update the entries and total amount too
+        var ex = findCategory(category);
         updateCategory(category, ex.entries - 1, ex.totalAmount - amount);
       });
     });
@@ -326,7 +325,6 @@ class DatabaseProvider with ChangeNotifier {
         _lending.removeWhere((element) => element.id == lenId);
         notifyListeners();
         // we have to update the entries and totalamount too
-
         var ex = findTxCategory(category);
         updateTxCategory(category, ex.entries - 1, ex.totalAmount - amount);
       });
