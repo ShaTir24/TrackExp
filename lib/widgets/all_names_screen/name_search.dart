@@ -17,8 +17,15 @@ class _NameSearchState extends State<NameSearch> {
       onChanged: (value) {
         provider.searchText = value;
       },
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: 'Search Names',
+          labelStyle: const TextStyle(
+            fontSize: 20,
+          ),
+          hintText: 'Enter Name',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          )
       ),
     );
   }

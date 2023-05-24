@@ -17,8 +17,15 @@ class _ExpenseSearchState extends State<ExpenseSearch> {
       onChanged: (value) {
         provider.searchText = value;
       },
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: 'Search Expenses',
+          labelStyle: const TextStyle(
+            fontSize: 20,
+          ),
+          hintText: 'Enter Title',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          )
       ),
     );
   }

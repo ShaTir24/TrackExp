@@ -49,6 +49,9 @@ class DatabaseProvider with ChangeNotifier {
 
   List<Expense> _expenses = [];
 
+  List<Expense> _present = [];
+  List<Expense> get present => _present;
+
   // when the search text is empty, return whole list, else search for the value
   List<Expense> get expenses {
     return _searchText != ''
@@ -225,68 +228,6 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
-  // Future<void> updatePersonData(
-  //     String name, String category, int nEntries, double nTotalAmount) async {
-  //   final db = await database;
-  //   await db.transaction((txn) async {
-  //     if (category == 'Debit or Due') {
-  //       await txn
-  //           .update(
-  //         pTable, // category table
-  //         {
-  //           'entries': nEntries, // new value of 'entries'
-  //           'totalDebit': nTotalAmount.toString(), // new value of 'totalAmount'
-  //         },
-  //         where: 'name == ?', // in table where the title ==
-  //         whereArgs: [name], // this person.
-  //       )
-  //           .then((_) {
-  //         // after updating in database. update it in our in-app memory too.
-  //         var file = findPerson(name);
-  //         file.entries = nEntries;
-  //         file.totalDebit = nTotalAmount;
-  //         notifyListeners();
-  //       });
-  //     } else if (category == 'Lend or Given') {
-  //       await txn
-  //           .update(
-  //         pTable, // category table
-  //         {
-  //           'entries': nEntries,
-  //           // new value of 'entries'
-  //           'totalCredit': nTotalAmount.toString(),
-  //         },
-  //         where: 'name == ?', // in table where the title ==
-  //         whereArgs: [name], // this person.
-  //       )
-  //           .then((_) {
-  //         // after updating in database. update it in our in-app memory too.
-  //         var file = findPerson(name);
-  //         file.entries = nEntries;
-  //         file.totalCredit = nTotalAmount;
-  //         notifyListeners();
-  //       });
-  //     } else {
-  //       await txn
-  //           .update(
-  //         pTable,
-  //         {
-  //           'entries': nEntries,
-  //           'totalGift': nTotalAmount.toString(),
-  //         },
-  //         where: 'name == ?',
-  //         whereArgs: [name],
-  //       )
-  //           .then((_) {
-  //         var file = findPerson(name);
-  //         file.entries = nEntries;
-  //         file.totalGift = nTotalAmount;
-  //         notifyListeners();
-  //       });
-  //     }
-  //   });
-  // }
-
   Future<void> updateTxCategory(
     String category,
     int nEntries,
@@ -349,26 +290,6 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
-  // Future<void> addPersonData(PersonData per) async {
-  //   final db = await database;
-  //   await db.transaction((txn) async {
-  //     await txn.insert(
-  //       pTable,
-  //       per.toMap(),
-  //       conflictAlgorithm: ConflictAlgorithm.replace,
-  //     ).then((data) {
-  //       final file = PersonData(
-  //           name: per.name,
-  //           entries: per.entries,
-  //           totalCredit: per.totalCredit,
-  //           totalDebit: per.totalDebit,
-  //           totalGift: per.totalGift);
-  //       _persons.add(file);
-  //       notifyListeners();
-  //     });
-  //   });
-  // }
-
   Future<void> addLending(Lendings len) async {
     final db = await database;
     await db.transaction((txn) async {
@@ -400,16 +321,6 @@ class DatabaseProvider with ChangeNotifier {
       });
     });
   }
-
-  // PersonData getPersonStructure(String name, String category, int entries, double amount) {
-  //   if(category == 'Lend or Given') {
-  //     return PersonData(name: name, entries: entries, totalCredit: amount, totalDebit: 0.0, totalGift: 0.0);
-  //   } else if(category == 'Debit or Due') {
-  //     return PersonData(name: name, entries: entries, totalCredit: 0.0, totalDebit: amount, totalGift: 0.0);
-  //   } else {
-  //     return PersonData(name: name, entries: entries, totalCredit: 0.0, totalDebit: 0.0, totalGift: amount);
-  //   }
-  // }
 
   Future<void> deleteExpense(int expId, String category, double amount) async {
     final db = await database;
@@ -471,6 +382,21 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
+  Future<List<Expense>> fetchDayExpenses(DateTime current) async {
+    final db = await database;
+    return await db.transaction((txn) async {
+      return await txn.query(eTable,
+          where: 'date == ?', whereArgs: [current.toString()]).then((data) {
+        final converted = List<Map<String, dynamic>>.from(data);
+        //
+        List<Expense> nList = List.generate(
+            converted.length, (index) => Expense.fromString(converted[index]));
+        _present = nList;
+        return _present;
+      });
+    });
+  }
+
   Future<List<Lendings>> fetchTransactions(String category) async {
     final db = await database;
     return await db.transaction((txn) async {
@@ -502,7 +428,7 @@ class DatabaseProvider with ChangeNotifier {
   Future<List<Expense>> fetchAllExpenses() async {
     final db = await database;
     return await db.transaction((txn) async {
-      return await txn.query(eTable).then((data) {
+      return await txn.rawQuery('SELECT * FROM $eTable ORDER BY date DESC').then((data) {
         final converted = List<Map<String, dynamic>>.from(data);
         List<Expense> nList = List.generate(
             converted.length, (index) => Expense.fromString(converted[index]));
@@ -572,6 +498,19 @@ class DatabaseProvider with ChangeNotifier {
         0.0, (previousValue, element) => previousValue + element.totalAmount);
   }
 
+  double calculateDayExpense(DateTime weekDay) {
+    double total = 0.0;
+    for (int j = 0; j < _expenses.length; j++) {
+      if (_expenses[j].date.year == weekDay.year &&
+          _expenses[j].date.month == weekDay.month &&
+          _expenses[j].date.day == weekDay.day) {
+        // if found then add the amount to total
+        total += _expenses[j].amount;
+      }
+    }
+    return total;
+  }
+
   List<Map<String, dynamic>> calculateWeekExpenses() {
     List<Map<String, dynamic>> data = [];
 
@@ -583,15 +522,7 @@ class DatabaseProvider with ChangeNotifier {
       final weekDay = DateTime.now().subtract(Duration(days: i));
 
       // check how many expenses happened that day
-      for (int j = 0; j < _expenses.length; j++) {
-        if (_expenses[j].date.year == weekDay.year &&
-            _expenses[j].date.month == weekDay.month &&
-            _expenses[j].date.day == weekDay.day) {
-          // if found then add the amount to total
-          total += _expenses[j].amount;
-        }
-      }
-
+      total = calculateDayExpense(weekDay);
       // add to a list
       data.add({'day': weekDay, 'amount': total});
     }

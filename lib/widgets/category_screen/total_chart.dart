@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:trackexp/widgets/limits_box.dart';
 import '../../models/database_provider.dart';
 
 class TotalChart extends StatefulWidget {
@@ -18,8 +17,6 @@ class _TotalChartState extends State<TotalChart> {
     return Consumer<DatabaseProvider>(builder: (_, db, __) {
       var list = db.categories;
       var total = db.calculateTotalExpenses();
-      var dailyLimit = db.dailyLimit;
-      var monthlyLimit = db.monthlyLimit;
       return Padding(
         padding: const EdgeInsets.all(5.0),
         child: Row(
@@ -30,28 +27,6 @@ class _TotalChartState extends State<TotalChart> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  FittedBox(
-                    alignment: Alignment.center,
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'Daily Limit: ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(dailyLimit)}',
-                      textScaleFactor: 1.25,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  FittedBox(
-                    alignment: Alignment.center,
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'Monthly Limit: ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(monthlyLimit)}',
-                      textScaleFactor: 1.25,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
                   FittedBox(
                     alignment: Alignment.center,
                     fit: BoxFit.scaleDown,
@@ -91,42 +66,28 @@ class _TotalChartState extends State<TotalChart> {
             ),
             Expanded(
               flex: 40,
-              child: Column(
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      showDialog(context: context, builder: (_) => LimitsBox());
-                    },
-                    icon: const Icon(Icons.currency_rupee_rounded),
-                    label: const Text("Set Limits"),
-                  ),
-                  Expanded(
-                    flex: 75,
-                    child: PieChart(
-                      PieChartData(
-                        centerSpaceRadius: 20.0,
-                        sections: total != 0
-                            ? list
-                                .map(
-                                  (e) => PieChartSectionData(
-                                    showTitle: false,
-                                    value: e.totalAmount,
-                                    color: Colors.primaries[list.indexOf(e)],
-                                  ),
-                                )
-                                .toList()
-                            : list
-                                .map(
-                                  (e) => PieChartSectionData(
-                                    showTitle: false,
-                                    color: Colors.primaries[list.indexOf(e)],
-                                  ),
-                                )
-                                .toList(),
-                      ),
-                    ),
-                  ),
-                ],
+              child: PieChart(
+                PieChartData(
+                  centerSpaceRadius: 20.0,
+                  sections: total != 0
+                      ? list
+                          .map(
+                            (e) => PieChartSectionData(
+                              showTitle: false,
+                              value: e.totalAmount,
+                              color: Colors.primaries[list.indexOf(e)],
+                            ),
+                          )
+                          .toList()
+                      : list
+                          .map(
+                            (e) => PieChartSectionData(
+                              showTitle: false,
+                              color: Colors.primaries[list.indexOf(e)],
+                            ),
+                          )
+                          .toList(),
+                ),
               ),
             ),
           ],

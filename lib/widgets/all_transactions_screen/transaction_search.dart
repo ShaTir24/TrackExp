@@ -17,8 +17,15 @@ class _TransactionSearchState extends State<TransactionSearch> {
       onChanged: (value) {
         provider.searchText = value;
       },
-      decoration: const InputDecoration(
+      decoration: InputDecoration(
         labelText: 'Search Transactions',
+          labelStyle: const TextStyle(
+            fontSize: 20,
+          ),
+          hintText: 'Enter Name',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          )
       ),
     );
   }

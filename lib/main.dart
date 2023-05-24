@@ -4,6 +4,7 @@ import 'package:trackexp/screens/all_lending.dart';
 import 'package:trackexp/screens/all_names.dart';
 import 'package:trackexp/screens/exchange_screen.dart';
 import 'package:trackexp/screens/home_screen.dart';
+import 'package:trackexp/screens/savings.dart';
 import 'package:trackexp/screens/transaction_screen.dart';
 import './models/database_provider.dart';
 // screens
@@ -34,7 +35,8 @@ class MyApp extends StatelessWidget {
         AllLending.name: (_) => const AllLending(),
         TransactionScreen.name: (_) => const TransactionScreen(),
         AllNames.name: (_) => const AllNames(),
-        ExchangeScreen.name: (_) => const ExchangeScreen()
+        ExchangeScreen.name: (_) => const ExchangeScreen(),
+        Savings.name: (_) => const Savings()
       },
     );
   }

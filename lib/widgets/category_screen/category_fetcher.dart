@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trackexp/screens/savings.dart';
 import '../../models/database_provider.dart';
 import './total_chart.dart';
 import './category_list.dart';
@@ -59,6 +60,23 @@ class _CategoryFetcherState extends State<CategoryFetcher> {
                           Navigator.of(context).pushNamed(AllExpenses.name);
                         },
                         child: const Text('View All'),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Day-by-Day Expenses',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(Savings.name);
+                        },
+                        child: const Text('View Day Expense'),
                       ),
                     ],
                   ),
