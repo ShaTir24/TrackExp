@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:trackexp/screens/transaction_screen.dart';
 import '../../models/database_provider.dart';
 import './total_chart.dart';
 import './category_list.dart';
@@ -39,7 +38,7 @@ class _CategoryFetcherState extends State<CategoryFetcher> {
             return Center(child: Text(snapshot.error.toString()));
           } else {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 70.0),
               child: Column(
                 children: [
                   const SizedBox(

@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:trackexp/widgets/all_transactions_screen/all_transactions_fetcher.dart';
 
+import '../widgets/lending_form.dart';
+
 class AllLending extends StatefulWidget {
   const AllLending({super.key});
   static const name = '/all_lending';
@@ -33,6 +35,16 @@ class _AllLendingState extends State<AllLending> {
         ),
       ),
       body: const AllTransactionsFetcher(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (_) => const LendingForm(),
+          );
+        },
+        child: const Icon(Icons.currency_rupee_rounded),
+      ),
     );
   }
 }

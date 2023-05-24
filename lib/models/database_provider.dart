@@ -45,7 +45,7 @@ class DatabaseProvider with ChangeNotifier {
 
   List<Lendings> _lending = [];
 
-  //List<Lendings> _names = [];
+  List<Map<String, dynamic>> _toDelete = [];
 
   //when the search text is empty, return the whole list, else search for the name
   List<Lendings> get lendings {
@@ -425,6 +425,21 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
+  Future<void> getAndDeletePersonData(String name) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      await txn.query(lTable, where: 'name = ?', whereArgs: [name]).then ((data) async {
+        final converted = List<Map<String, dynamic>>.from(data);
+        _toDelete = converted;
+        for (var e in _toDelete) {
+          deleteLending(e['id'], e['category'], name, double.parse(e['amount']));
+        }
+        _toDelete.clear();
+        _names.remove(name);
+      });
+    });
+  }
+
   Future<List<Expense>> fetchExpenses(String category) async {
     final db = await database;
     return await db.transaction((txn) async {
@@ -446,7 +461,6 @@ class DatabaseProvider with ChangeNotifier {
       return await txn.query(lTable,
           where: 'category == ?', whereArgs: [category]).then((data) {
         final converted = List<Map<String, dynamic>>.from(data);
-        //
         List<Lendings> nList = List.generate(
             converted.length, (index) => Lendings.fromString(converted[index]));
         _lending = nList;

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trackexp/widgets/all_transactions_screen/all_transactions_list.dart';
 import 'package:trackexp/widgets/all_transactions_screen/transaction_search.dart';
 import '../../models/database_provider.dart';
+import '../../screens/all_names.dart';
 
 class AllTransactionsFetcher extends StatefulWidget {
   const AllTransactionsFetcher({super.key});
@@ -35,11 +36,28 @@ class _AllTransactionsFetcherState extends State<AllTransactionsFetcher> {
             return Center(child: Text(snapshot.error.toString()));
           } else {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 70.0),
               child: Column(
-                children: const [
-                  TransactionSearch(),
-                  Expanded(child: AllTransactionsList()),
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Transactions by Name',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(AllNames.name);
+                        },
+                        child: const Text('View Names'),
+                      ),
+                    ],
+                  ),
+                  const TransactionSearch(),
+                  const Expanded(child: AllTransactionsList()),
                 ],
               ),
             );

@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:trackexp/screens/all_lending.dart';
 import 'package:trackexp/widgets/transaction_screen/transaction_list.dart';
 import '../../models/database_provider.dart';
-import '../../screens/all_names.dart';
 import './total_chart.dart';
 
 class TransactionFetcher extends StatefulWidget {
@@ -39,7 +38,7 @@ class _TransactionFetcherState extends State<TransactionFetcher> {
             return Center(child: Text(snapshot.error.toString()));
           } else {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 70.0),
               child: Column(
                 children: [
                   const SizedBox(
@@ -60,23 +59,6 @@ class _TransactionFetcherState extends State<TransactionFetcher> {
                           Navigator.of(context).pushNamed(AllLending.name);
                         },
                         child: const Text('View All'),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Transactions by Name',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(AllNames.name);
-                        },
-                        child: const Text('View Names'),
                       ),
                     ],
                   ),
