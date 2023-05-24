@@ -1,0 +1,6 @@
+flutter_native_splash:
+  image: assets/ic_launcher.png   # Path to the splash screen image
+  color: "42a5f5"                   # Background color (optional)
+  fill: true                        # Whether to fill the screen (optional)
+  android: true                     # Enable/disable splash screen on Android (optional)
+  ios: true                         # Enable/disable splash screen on iOS (optional)

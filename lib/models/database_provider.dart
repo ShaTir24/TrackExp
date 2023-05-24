@@ -19,6 +19,22 @@ class DatabaseProvider with ChangeNotifier {
     // when the value of the search text changes it will notify the widgets.
   }
 
+  double _dailyLimit = 0.0;
+  double get dailyLimit => _dailyLimit;
+
+  void updateDailyLimit(double value) {
+    _dailyLimit = value;
+    notifyListeners();
+  }
+
+  double _monthlyLimit = 0.0;
+  double get monthlyLimit => _monthlyLimit;
+
+  void updateMonthlyLimit(double value) {
+    _monthlyLimit = value;
+    notifyListeners();
+  }
+
   // in-app memory for holding the Expense categories temporarily
   List<ExpenseCategory> _categories = [];
 
