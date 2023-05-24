@@ -39,7 +39,22 @@ class _LendingFormState extends State<LendingForm> {
   Widget build(BuildContext context) {
     final provider = Provider.of<DatabaseProvider>(context, listen: false);
     return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
+      height: MediaQuery.of(context).size.height * 0.6,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.8),
+            spreadRadius: 2,
+            blurRadius: 5,
+          ),
+        ],
+        gradient: const LinearGradient(
+          colors: [Colors.white54, Colors.white70],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
       padding: const EdgeInsets.all(20.0),
       child: SingleChildScrollView(
         child: Column(
@@ -47,65 +62,94 @@ class _LendingFormState extends State<LendingForm> {
             // title
             TextField(
               controller: _name,
-              decoration: const InputDecoration(
-                labelText: 'Name of Person',
-              ),
+              decoration: InputDecoration(
+                  labelText: 'Name of Person',
+                  labelStyle: TextStyle(
+                    fontSize: 20,
+                  ),
+                  hintText: 'Enter Name',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  )),
             ),
             const SizedBox(height: 20.0),
             // amount
             TextField(
               controller: _amount,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                labelText: 'Amount of transaction',
-              ),
+              decoration: InputDecoration(
+                  labelText: 'Amount of transaction',
+                  labelStyle: TextStyle(
+                    fontSize: 20,
+                  ),
+                  hintText: 'Enter Amount',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  )),
             ),
             const SizedBox(height: 20.0),
             // amount
             TextField(
               controller: _notes,
-              decoration: const InputDecoration(
-                labelText: 'Notes',
-              ),
+              decoration: InputDecoration(
+                  labelText: 'Notes',
+                  labelStyle: TextStyle(
+                    fontSize: 20,
+                  ),
+                  hintText: 'Enter Note',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  )),
             ),
             const SizedBox(height: 20.0),
             // date picker
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Text(_date != null
+                Text(
+                  _date != null
                       ? DateFormat('MMMM dd, yyyy').format(_date!)
-                      : 'Select Date'),
+                      : 'Select Date',
+                  style: const TextStyle(fontSize: 20.0, color: Colors.black87),
                 ),
                 IconButton(
                   onPressed: () => _pickDate(),
-                  icon: const Icon(Icons.calendar_month),
+                  icon: const Icon(Icons.calendar_month_rounded),
                 ),
               ],
             ),
             const SizedBox(height: 20.0),
             // category
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Expanded(child: Text('Category')),
-                Expanded(
-                  child: DropdownButton(
-                    items: transactions.keys
-                        .map(
-                          (e) => DropdownMenuItem(
-                        value: e,
-                        child: Text(e),
-                      ),
-                    )
-                        .toList(),
-                    value: _initialValue,
-                    onChanged: (newValue) {
-                      setState(() {
-                        _initialValue = newValue!;
-                      });
-                    },
+                const Expanded(
+                    child: Text(
+                  'Category',
+                  style: TextStyle(fontSize: 20.0, color: Colors.black87),
+                )),
+                DropdownButton(
+                  items: transactions.keys
+                      .map(
+                        (e) => DropdownMenuItem(
+                          value: e,
+                          child: Text(e),
+                        ),
+                      )
+                      .toList(),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
                   ),
+                  elevation: 4,
+                  dropdownColor: Color.fromARGB(220, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(10.0),
+                  value: _initialValue,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _initialValue = newValue!;
+                    });
+                  },
                 ),
               ],
             ),
@@ -128,8 +172,21 @@ class _LendingFormState extends State<LendingForm> {
                   Navigator.of(context).pop();
                 }
               },
-              icon: const Icon(Icons.add),
-              label: const Text('Add Information'),
+              icon: const Icon(Icons.add, size: 30,),
+              label: const Text('Add Information',
+              style: TextStyle(
+                fontSize: 20,
+              ),),
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
             ),
           ],
         ),

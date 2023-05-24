@@ -13,16 +13,21 @@ class LimitsBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<DatabaseProvider>(context, listen: false);
     return AlertDialog(
+      backgroundColor: Color.fromARGB(200, 255, 255, 255),
+      elevation: 5,
       title: const Text('Enter the Value to Set Expense Limits?'),
       content: SizedBox(
-        height: 226,
+        height: MediaQuery.of(context).size.height * 0.25,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             TextField(
               controller: _daily,
               decoration: InputDecoration(
-                label: const Text('Daily Expense Limit:'),
+                label: const Text('Daily Expense Limit:',
+                style: TextStyle(
+                  fontSize: 20
+                ),),
                   hintText: 'Enter Amount',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -33,7 +38,10 @@ class LimitsBox extends StatelessWidget {
             TextField(
               controller: _monthly,
               decoration: InputDecoration(
-                  label: const Text('Monthly Expense Limit:'),
+                  label: const Text('Monthly Expense Limit:',
+                    style: TextStyle(
+                        fontSize: 20
+                    ),),
                   hintText: 'Enter Amount',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10.0),
@@ -48,7 +56,10 @@ class LimitsBox extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop(false); // dont delete
                   },
-                  child: const Text('Cancel'),
+                  child: const Text('Cancel',
+                    style: TextStyle(
+                        fontSize: 20
+                    ),),
                 ),
                 ElevatedButton.icon(
                     onPressed: () {
@@ -59,10 +70,12 @@ class LimitsBox extends StatelessWidget {
                     icon: const Icon(
                       Icons.check_circle_rounded
                     ),
-                    label: const Text('Set Limits')),
+                    label: const Text('Set Limits',
+                      style: TextStyle(
+                          fontSize: 20
+                      ),)),
               ],
             ),
-            const SizedBox(height: 20.0),
           ],
         ),
       )

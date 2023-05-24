@@ -39,7 +39,22 @@ class _ExpenseFormState extends State<ExpenseForm> {
   Widget build(BuildContext context) {
     final provider = Provider.of<DatabaseProvider>(context, listen: false);
     return Container(
-      height: MediaQuery.of(context).size.height * 0.7,
+      height: MediaQuery.of(context).size.height * 0.6,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.8),
+            spreadRadius: 2,
+            blurRadius: 5,
+          ),
+        ],
+        gradient: const LinearGradient(
+          colors: [Colors.white54, Colors.white70],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
       padding: const EdgeInsets.all(20.0),
       child: SingleChildScrollView(
         child: Column(
@@ -47,8 +62,15 @@ class _ExpenseFormState extends State<ExpenseForm> {
             // title
             TextField(
               controller: _title,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Title of expense',
+                  labelStyle: TextStyle(
+                    fontSize: 20,
+                  ),
+                  hintText: 'Enter Title',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  )
               ),
             ),
             const SizedBox(height: 20.0),
@@ -56,16 +78,30 @@ class _ExpenseFormState extends State<ExpenseForm> {
             TextField(
               controller: _amount,
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Amount of expense',
+                  labelStyle: TextStyle(
+                    fontSize: 20,
+                  ),
+                  hintText: 'Enter Amount',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  )
               ),
             ),
             const SizedBox(height: 20.0),
             // amount
             TextField(
               controller: _notes,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 labelText: 'Notes',
+                  labelStyle: TextStyle(
+                    fontSize: 20,
+                  ),
+                  hintText: 'Enter Note',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  )
               ),
             ),
             const SizedBox(height: 20.0),
@@ -75,11 +111,13 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 Expanded(
                   child: Text(_date != null
                       ? DateFormat('MMMM dd, yyyy').format(_date!)
-                      : 'Select Date'),
+                      : 'Select Date',
+                    style: const TextStyle(fontSize: 20.0, color: Colors.black87),
+                  ),
                 ),
                 IconButton(
                   onPressed: () => _pickDate(),
-                  icon: const Icon(Icons.calendar_month),
+                  icon: const Icon(Icons.calendar_month_rounded),
                 ),
               ],
             ),
@@ -88,7 +126,9 @@ class _ExpenseFormState extends State<ExpenseForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Expanded(child: Text('Category')),
+                const Expanded(child: Text('Category',
+                  style: TextStyle(fontSize: 20.0, color: Colors.black87),
+                )),
                 Expanded(
                   child: DropdownButton(
                     items: icons.keys
@@ -99,6 +139,13 @@ class _ExpenseFormState extends State<ExpenseForm> {
                           ),
                         )
                         .toList(),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                    ),
+                    elevation: 4,
+                    dropdownColor: Color.fromARGB(220, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(10.0),
                     value: _initialValue,
                     onChanged: (newValue) {
                       setState(() {
@@ -129,7 +176,20 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 }
               },
               icon: const Icon(Icons.add),
-              label: const Text('Add Expense'),
+              label: const Text('Add Expense',
+                style: TextStyle(
+                  fontSize: 20,
+                ),),
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
