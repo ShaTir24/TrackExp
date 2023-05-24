@@ -28,38 +28,33 @@ class DatabaseProvider with ChangeNotifier {
 
   List<TransactionCategory> get txCategories => _txCategories;
 
+  List<String> _names = [];
+  List<String> get names => _names;
+
   List<Expense> _expenses = [];
 
   // when the search text is empty, return whole list, else search for the value
   List<Expense> get expenses {
     return _searchText != ''
         ? _expenses
-        .where((e) =>
-        e.title.toLowerCase().contains(_searchText.toLowerCase()))
-        .toList()
+            .where((e) =>
+                e.title.toLowerCase().contains(_searchText.toLowerCase()))
+            .toList()
         : _expenses;
   }
 
   List<Lendings> _lending = [];
-  List<Lendings> _names = [];
+
+  //List<Lendings> _names = [];
 
   //when the search text is empty, return the whole list, else search for the name
   List<Lendings> get lendings {
     return _searchText != ''
         ? _lending
-        .where((e) =>
-        e.name.toLowerCase().contains(_searchText.toLowerCase()))
-        .toList()
+            .where(
+                (e) => e.name.toLowerCase().contains(_searchText.toLowerCase()))
+            .toList()
         : _lending;
-  }
-
-  List<Lendings> get names {
-    return _searchText != ''
-        ? _names
-        .where((e) =>
-        e.name.toLowerCase().contains(_searchText.toLowerCase()))
-        .toList()
-        : _names;
   }
 
   Database? _database;
@@ -123,6 +118,7 @@ class DatabaseProvider with ChangeNotifier {
         date TEXT,
         category TEXT
       )''');
+
       // insert the initial categories.
       // this will add all the categories to category table and initialize the 'entries' with 0 and 'totalAmount' to 0.0
       for (int i = 0; i < icons.length; i++) {
@@ -157,7 +153,7 @@ class DatabaseProvider with ChangeNotifier {
         final converted = List<Map<String, dynamic>>.from(data);
         // create a 'ExpenseCategory' from every 'map' in this 'converted'
         List<ExpenseCategory> nList = List.generate(converted.length,
-                (index) => ExpenseCategory.fromString(converted[index]));
+            (index) => ExpenseCategory.fromString(converted[index]));
         // set the value of 'categories' to 'nList'
         _categories = nList;
         // return the '_categories'
@@ -176,7 +172,7 @@ class DatabaseProvider with ChangeNotifier {
         final converted = List<Map<String, dynamic>>.from(data);
         // create a 'TransactionCategory' from every 'map' in this 'converted'
         List<TransactionCategory> nList = List.generate(converted.length,
-                (index) => TransactionCategory.fromString(converted[index]));
+            (index) => TransactionCategory.fromString(converted[index]));
         // set the value of 'categories' to 'nList'
         _txCategories = nList;
         // return the '_categories'
@@ -185,9 +181,11 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> updateCategory(String category,
-      int nEntries,
-      double nTotalAmount,) async {
+  Future<void> updateCategory(
+    String category,
+    int nEntries,
+    double nTotalAmount,
+  ) async {
     final db = await database;
     await db.transaction((txn) async {
       await txn
@@ -203,7 +201,7 @@ class DatabaseProvider with ChangeNotifier {
           .then((_) {
         // after updating in database. update it in our in-app memory too.
         var file =
-        _categories.firstWhere((element) => element.title == category);
+            _categories.firstWhere((element) => element.title == category);
         file.entries = nEntries;
         file.totalAmount = nTotalAmount;
         notifyListeners();
@@ -211,9 +209,73 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> updateTxCategory(String category,
-      int nEntries,
-      double nTotalAmount,) async {
+  // Future<void> updatePersonData(
+  //     String name, String category, int nEntries, double nTotalAmount) async {
+  //   final db = await database;
+  //   await db.transaction((txn) async {
+  //     if (category == 'Debit or Due') {
+  //       await txn
+  //           .update(
+  //         pTable, // category table
+  //         {
+  //           'entries': nEntries, // new value of 'entries'
+  //           'totalDebit': nTotalAmount.toString(), // new value of 'totalAmount'
+  //         },
+  //         where: 'name == ?', // in table where the title ==
+  //         whereArgs: [name], // this person.
+  //       )
+  //           .then((_) {
+  //         // after updating in database. update it in our in-app memory too.
+  //         var file = findPerson(name);
+  //         file.entries = nEntries;
+  //         file.totalDebit = nTotalAmount;
+  //         notifyListeners();
+  //       });
+  //     } else if (category == 'Lend or Given') {
+  //       await txn
+  //           .update(
+  //         pTable, // category table
+  //         {
+  //           'entries': nEntries,
+  //           // new value of 'entries'
+  //           'totalCredit': nTotalAmount.toString(),
+  //         },
+  //         where: 'name == ?', // in table where the title ==
+  //         whereArgs: [name], // this person.
+  //       )
+  //           .then((_) {
+  //         // after updating in database. update it in our in-app memory too.
+  //         var file = findPerson(name);
+  //         file.entries = nEntries;
+  //         file.totalCredit = nTotalAmount;
+  //         notifyListeners();
+  //       });
+  //     } else {
+  //       await txn
+  //           .update(
+  //         pTable,
+  //         {
+  //           'entries': nEntries,
+  //           'totalGift': nTotalAmount.toString(),
+  //         },
+  //         where: 'name == ?',
+  //         whereArgs: [name],
+  //       )
+  //           .then((_) {
+  //         var file = findPerson(name);
+  //         file.entries = nEntries;
+  //         file.totalGift = nTotalAmount;
+  //         notifyListeners();
+  //       });
+  //     }
+  //   });
+  // }
+
+  Future<void> updateTxCategory(
+    String category,
+    int nEntries,
+    double nTotalAmount,
+  ) async {
     final db = await database;
     await db.transaction((txn) async {
       await txn
@@ -229,7 +291,7 @@ class DatabaseProvider with ChangeNotifier {
           .then((_) {
         // after updating in database. update it in our in-app memory too.
         var file =
-        _txCategories.firstWhere((element) => element.name == category);
+            _txCategories.firstWhere((element) => element.name == category);
         file.entries = nEntries;
         file.totalAmount = nTotalAmount;
         notifyListeners();
@@ -271,6 +333,26 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
+  // Future<void> addPersonData(PersonData per) async {
+  //   final db = await database;
+  //   await db.transaction((txn) async {
+  //     await txn.insert(
+  //       pTable,
+  //       per.toMap(),
+  //       conflictAlgorithm: ConflictAlgorithm.replace,
+  //     ).then((data) {
+  //       final file = PersonData(
+  //           name: per.name,
+  //           entries: per.entries,
+  //           totalCredit: per.totalCredit,
+  //           totalDebit: per.totalDebit,
+  //           totalGift: per.totalGift);
+  //       _persons.add(file);
+  //       notifyListeners();
+  //     });
+  //   });
+  // }
+
   Future<void> addLending(Lendings len) async {
     final db = await database;
     await db.transaction((txn) async {
@@ -280,7 +362,7 @@ class DatabaseProvider with ChangeNotifier {
         len.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace,
       )
-          .then((generatedId) {
+          .then((generatedId) async {
         // after inserting in a database. we store it in in-app memory with new expense with generated id
         final file2 = Lendings(
             id: generatedId,
@@ -296,12 +378,22 @@ class DatabaseProvider with ChangeNotifier {
         notifyListeners();
         // after we inserted the expense, we need to update the 'entries' and 'totalAmount' of the related 'category'
         var ex = findTxCategory(len.category);
-
         updateTxCategory(
             len.category, ex.entries + 1, ex.totalAmount + len.amount);
+
       });
     });
   }
+
+  // PersonData getPersonStructure(String name, String category, int entries, double amount) {
+  //   if(category == 'Lend or Given') {
+  //     return PersonData(name: name, entries: entries, totalCredit: amount, totalDebit: 0.0, totalGift: 0.0);
+  //   } else if(category == 'Debit or Due') {
+  //     return PersonData(name: name, entries: entries, totalCredit: 0.0, totalDebit: amount, totalGift: 0.0);
+  //   } else {
+  //     return PersonData(name: name, entries: entries, totalCredit: 0.0, totalDebit: 0.0, totalGift: amount);
+  //   }
+  // }
 
   Future<void> deleteExpense(int expId, String category, double amount) async {
     final db = await database;
@@ -317,14 +409,16 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
-  Future<void> deleteLending(int lenId, String category, double amount) async {
+  Future<void> deleteLending(
+      int lenId, String category, String name, double amount) async {
     final db = await database;
     await db.transaction((txn) async {
-      await txn.delete(lTable, where: 'id == ?', whereArgs: [lenId]).then((_) {
+      await txn
+          .delete(lTable, where: 'id == ?', whereArgs: [lenId]).then((_) async {
         // remove from in-app memory too
         _lending.removeWhere((element) => element.id == lenId);
         notifyListeners();
-        // we have to update the entries and totalamount too
+        // we have to update the entries and total amount too
         var ex = findTxCategory(category);
         updateTxCategory(category, ex.entries - 1, ex.totalAmount - amount);
       });
@@ -361,6 +455,20 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
+  Future<List<String>> fetchPersonNames() async {
+    final db = await database;
+    return await db.transaction((txn) async {
+      return await txn.query(lTable, distinct: true, columns: ['name']).then(
+          (data) {
+            final converted = List<Map<String, dynamic>>.from(data);
+            List<String> nList = List.generate(
+              converted.length, (index) => converted[index]['name'] as String);
+            _names = nList;
+            return _names;
+          });
+    });
+  }
+
   Future<List<Expense>> fetchAllExpenses() async {
     final db = await database;
     return await db.transaction((txn) async {
@@ -383,19 +491,6 @@ class DatabaseProvider with ChangeNotifier {
             converted.length, (index) => Lendings.fromString(converted[index]));
         _lending = nList;
         return _lending;
-      });
-    });
-  }
-
-  Future<List<Lendings>> fetchAllNames() async {
-    final db = await database;
-    return await db.transaction((txn) async {
-      return await txn.rawQuery('SELECT DISTINCT name, id, amount, notes, date, category FROM $lTable')
-          .then((data) {
-            final converted = List<Map<String, dynamic>>.from(data);
-            List<Lendings> nList = List.generate(converted.length, (index) => Lendings.fromString(converted[index]));
-            _names = nList;
-            return _names;
       });
     });
   }
@@ -426,11 +521,11 @@ class DatabaseProvider with ChangeNotifier {
     return {'entries': list.length, 'totalAmount': total};
   }
 
-  Map<String, dynamic> calculateTransactionPerPerson(String name,
-      String category) {
+  Map<String, dynamic> calculateTransactionPerPerson(
+      String name, String category) {
     double total = 0.0;
-    var list = _lending.where((element) =>
-    element.name == name && element.category == category);
+    var list = _lending.where(
+        (element) => element.name == name && element.category == category);
     for (final i in list) {
       total += i.amount;
     }
@@ -439,14 +534,12 @@ class DatabaseProvider with ChangeNotifier {
 
   double calculateTotalExpenses() {
     return _categories.fold(
-        0.0, (previousValue, element) => previousValue + element.totalAmount
-    );
+        0.0, (previousValue, element) => previousValue + element.totalAmount);
   }
 
   double calculateTotalTransactions() {
     return _txCategories.fold(
-        0.0, (previousValue, element) => previousValue + element.totalAmount
-    );
+        0.0, (previousValue, element) => previousValue + element.totalAmount);
   }
 
   List<Map<String, dynamic>> calculateWeekExpenses() {

@@ -17,7 +17,7 @@ class CategoryScreen extends StatelessWidget {
             builder: (_) => const ExpenseForm(),
           );
         },
-        child: const Icon(Icons.currency_rupee_rounded),
+        child: const Icon(Icons.wallet_rounded),
       ),
     );
   }

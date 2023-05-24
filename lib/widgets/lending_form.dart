@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../constants/transactions.dart';
 import '../models/database_provider.dart';
-import '../constants/icons.dart';
-import '../models/expense.dart';
 import '../models/lendings.dart';
 
 class LendingForm extends StatefulWidget {

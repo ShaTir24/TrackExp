@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:trackexp/widgets/expense_form.dart';
 import '../widgets/all_expenses_screen/all_expenses_fetcher.dart';
 
 class AllExpenses extends StatefulWidget {
@@ -33,6 +34,16 @@ class _AllExpensesState extends State<AllExpenses> {
         ),
       ),
       body: const AllExpensesFetcher(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (_) => const ExpenseForm(),
+          );
+        },
+        child: const Icon(Icons.wallet_rounded),
+      ),
     );
   }
 }

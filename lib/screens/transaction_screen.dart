@@ -17,7 +17,7 @@ class TransactionScreen extends StatelessWidget {
             builder: (_) => const LendingForm(),
           );
         },
-        child: const Icon(Icons.wallet_rounded),
+        child: const Icon(Icons.currency_rupee_rounded),
       ),
     );
   }

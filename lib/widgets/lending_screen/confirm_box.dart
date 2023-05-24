@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trackexp/models/lendings.dart';
 import '../../models/database_provider.dart';
-import '../../models/expense.dart';
 
 class ConfirmBox extends StatelessWidget {
   const ConfirmBox({
@@ -30,7 +29,7 @@ class ConfirmBox extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop(true); // delete
-              provider.deleteLending(len.id, len.category, len.amount);
+              provider.deleteLending(len.id, len.category, len.name, len.amount);
             },
             child: const Text('Delete'),
           ),

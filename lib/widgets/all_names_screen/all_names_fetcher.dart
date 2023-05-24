@@ -16,7 +16,7 @@ class _AllNamesFetcherState extends State<AllNamesFetcher> {
 
   Future _getAllNames() async {
     final provider = Provider.of<DatabaseProvider>(context, listen: false);
-    return await provider.fetchAllNames();
+    return await provider.fetchPersonNames();
   }
 
   @override
