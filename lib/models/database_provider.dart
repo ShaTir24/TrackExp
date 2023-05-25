@@ -383,10 +383,10 @@ class DatabaseProvider with ChangeNotifier {
   }
 
   Future<List<Expense>> fetchDayExpenses(DateTime current) async {
+    _present.clear();
     final db = await database;
     return await db.transaction((txn) async {
-      return await txn.query(eTable,
-          where: 'date == ?', whereArgs: [current.toString()]).then((data) {
+      return await txn.rawQuery('SELECT * FROM $eTable WHERE date LIKE ?', ['${current.year}-${current.month}-${current.day}%']).then((data) {
         final converted = List<Map<String, dynamic>>.from(data);
         //
         List<Expense> nList = List.generate(
@@ -498,7 +498,13 @@ class DatabaseProvider with ChangeNotifier {
         0.0, (previousValue, element) => previousValue + element.totalAmount);
   }
 
-  double calculateDayExpense(DateTime weekDay) {
+  double calculateDayTotalExpense() {
+    return _present.fold(
+      0.0, (previousValue, element) => previousValue + element.amount
+    );
+  }
+
+  double calculateDayExpenses(DateTime weekDay) {
     double total = 0.0;
     for (int j = 0; j < _expenses.length; j++) {
       if (_expenses[j].date.year == weekDay.year &&
@@ -522,8 +528,7 @@ class DatabaseProvider with ChangeNotifier {
       final weekDay = DateTime.now().subtract(Duration(days: i));
 
       // check how many expenses happened that day
-      total = calculateDayExpense(weekDay);
-      // add to a list
+      total = calculateDayExpenses(weekDay);
       data.add({'day': weekDay, 'amount': total});
     }
     // return the list

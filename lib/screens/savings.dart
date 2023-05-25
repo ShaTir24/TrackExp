@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:trackexp/widgets/expense_form.dart';
 import '../widgets/savings_screen/savings_fetcher.dart';
 
@@ -15,21 +14,6 @@ class Savings extends StatefulWidget {
 }
 
 class _Savings extends State<Savings> {
-  DateTime _date = DateTime.now();
-
-  _pickDate() async {
-    DateTime? pickedDate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2023),
-        lastDate: DateTime.now());
-
-    if (pickedDate != null) {
-      setState(() {
-        _date = pickedDate;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,24 +36,7 @@ class _Savings extends State<Savings> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                DateFormat('MMMM dd, yyyy').format(_date),
-                style: const TextStyle(fontSize: 20.0, color: Colors.black87),
-              ),
-              IconButton(
-                onPressed: () => _pickDate(),
-                icon: const Icon(Icons.calendar_month_rounded),
-              ),
-            ],
-          ),
-          SavingsFetcher(_date),
-        ],
-      ),
+      body: SavingsFetcher(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(

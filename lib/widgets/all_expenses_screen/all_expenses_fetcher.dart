@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/database_provider.dart';
+import '../../screens/savings.dart';
 import './all_expenses_list.dart';
 import './expense_search.dart';
 
@@ -34,10 +35,27 @@ class _AllExpensesFetcherState extends State<AllExpensesFetcher> {
           if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
           } else {
-            return const Padding(
+            return Padding(
               padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 70.0),
               child: Column(
                 children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Day-by-Day Expenses',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(Savings.name);
+                        },
+                        child: const Text('View Day Expense'),
+                      ),
+                    ],
+                  ),
                   ExpenseSearch(),
                   Expanded(child: AllExpensesList()),
                 ],
