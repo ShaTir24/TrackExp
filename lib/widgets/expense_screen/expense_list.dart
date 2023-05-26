@@ -15,12 +15,23 @@ class ExpenseList extends StatelessWidget {
             ? ListView.builder(
                 itemCount: exList.length,
                 itemBuilder: (_, i) => Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ExpenseCard(exList[i]),
-                ))
+                      padding: const EdgeInsets.all(8.0),
+                      child: ExpenseCard(exList[i]),
+                    ))
             : const Center(
-                child: Text('No Expenses Added'),
-              );
+                child: Column(
+                children: [
+                  Icon(
+                    Icons.not_interested_rounded,
+                    size: 150,
+                    color: Colors.black38,
+                  ),
+                  Text(
+                    'No Expenses Found',
+                    style: TextStyle(fontSize: 25.0, color: Colors.black45),
+                  ),
+                ],
+              ));
       },
     );
   }

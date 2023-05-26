@@ -27,13 +27,13 @@ class AllTransactionsList extends StatelessWidget {
                     Icon(
                       Icons.not_interested_rounded,
                       size: 150,
+                      color: Colors.black38,
                     ),
-                    Text(
-                      'No Transactions Found',
+                    Text('No Transactions Found',
                       style: TextStyle(
-                        fontSize: 25.0,
-                      ),
-                    ),
+                          fontSize: 25.0,
+                          color: Colors.black45
+                      ),),
                   ],
                 ),
               );

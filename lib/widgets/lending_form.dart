@@ -40,7 +40,7 @@ class _LendingFormState extends State<LendingForm> {
     final provider = Provider.of<DatabaseProvider>(context, listen: false);
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 20),
+        padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 75.0),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColorLight.withOpacity(0.5),
         ),
@@ -148,7 +148,7 @@ class _LendingFormState extends State<LendingForm> {
                 ),
               ],
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 50.0),
             ElevatedButton.icon(
               onPressed: () {
                 if (_name.text != '' && _amount.text != '') {
@@ -186,6 +186,9 @@ class _LendingFormState extends State<LendingForm> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 50.0,
+            )
           ],
         ),
       ),

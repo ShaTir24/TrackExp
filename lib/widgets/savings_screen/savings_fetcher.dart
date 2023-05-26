@@ -40,9 +40,6 @@ class _SavingsFetcherState extends State<SavingsFetcher> {
                 padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 70.0),
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 20.0,
-                    ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: SizedBox(child: SavingsStats()),

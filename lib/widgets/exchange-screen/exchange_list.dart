@@ -13,11 +13,23 @@ class ExchangeList extends StatelessWidget {
         var exList = db.lendings;
         return exList.isNotEmpty
             ? ListView.builder(
-            itemCount: exList.length,
-            itemBuilder: (_, i) => ExchangeCard(exList[i]))
+                itemCount: exList.length,
+                itemBuilder: (_, i) => ExchangeCard(exList[i]))
             : const Center(
-          child: Text('No Expenses Added'),
-        );
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.not_interested_rounded,
+                      size: 150,
+                      color: Colors.black38,
+                    ),
+                    Text(
+                      'No Transactions Found',
+                      style: TextStyle(fontSize: 25.0, color: Colors.black45),
+                    ),
+                  ],
+                ),
+              );
       },
     );
   }

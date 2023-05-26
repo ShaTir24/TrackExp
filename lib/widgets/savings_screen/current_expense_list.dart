@@ -19,7 +19,20 @@ class CurrentExpenseList extends StatelessWidget {
                       child: ExpenseCard(exList[i]),
                     ))
             : const Center(
-                child: Text('No Expenses Added'),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.not_interested_rounded,
+                      size: 150,
+                      color: Colors.black38,
+                    ),
+                    Text('No Expenses Found',
+                      style: TextStyle(
+                          fontSize: 25.0,
+                          color: Colors.black45
+                      ),),
+                  ],
+                ),
               );
       },
     );

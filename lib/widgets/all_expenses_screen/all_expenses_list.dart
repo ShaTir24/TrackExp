@@ -27,10 +27,12 @@ class AllExpensesList extends StatelessWidget {
                     Icon(
                       Icons.not_interested_rounded,
                       size: 150,
+                      color: Colors.black38,
                     ),
                     Text('No Expenses Found',
                       style: TextStyle(
                         fontSize: 25.0,
+                        color: Colors.black45
                       ),),
                   ],
                 ),

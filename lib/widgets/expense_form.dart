@@ -40,7 +40,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
     final provider = Provider.of<DatabaseProvider>(context, listen: false);
     return SingleChildScrollView(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 20),
+        padding: const EdgeInsets.fromLTRB(20.0, 30.0, 20.0, 75.0),
         decoration: BoxDecoration(
           color: Theme.of(context).primaryColorLight.withOpacity(0.5),
         ),
@@ -151,7 +151,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 ),
               ],
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 50.0),
             ElevatedButton.icon(
               onPressed: () {
                 if (_title.text != '' && _amount.text != '') {
@@ -171,7 +171,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
                   Navigator.of(context).pop();
                 }
               },
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.add_rounded),
               label: const Text('Add Expense',
                 style: TextStyle(
                   fontSize: 20,
@@ -190,6 +190,9 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 50.0,
+            )
           ],
         ),
       ),

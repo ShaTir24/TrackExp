@@ -384,12 +384,9 @@ class DatabaseProvider with ChangeNotifier {
   Future<void> setLimitValue(double limit) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setDouble('dailyLimit', limit);
-  }
-
-  Future<double> getLimitValue() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     _dailyLimit = prefs.getDouble('dailyLimit')!;
-    return _dailyLimit;
+    //print(_dailyLimit);
+    notifyListeners();
   }
 
   Future<List<Lendings>> fetchTransactions(String category) async {
