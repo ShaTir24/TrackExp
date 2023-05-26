@@ -38,31 +38,71 @@ class _CategoryFetcherState extends State<CategoryFetcher> {
             return Center(child: Text(snapshot.error.toString()));
           } else {
             return Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 70.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 70.0),
               child: Column(
                 children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(200, 220, 220, 220),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: const SizedBox(
+                      height: 220.0,
+                      child: TotalChart(),
+                    ),
+                  ),
                   const SizedBox(
-                    height: 250.0,
-                    child: TotalChart(),
+                    height: 20.0,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Expenses',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(200, 100, 150, 200),
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Track Your Expenses',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0
+
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(250, 180, 220, 255),
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(AllExpenses.name);
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(5.0),
+                                child: Text('View All',
+                                  style: TextStyle(
+                                    color: Colors.indigo,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0,
+                                  ),),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(AllExpenses.name);
-                        },
-                        child: const Text('View All'),
-                      ),
-                    ],
+                    ),
                   ),
-                  const Expanded(child: CategoryList()),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  const Expanded(child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: CategoryList(),
+                  )),
                 ],
               ),
             );

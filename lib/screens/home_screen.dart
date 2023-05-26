@@ -34,6 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: AppBar(
               backgroundColor: Theme.of(context).primaryColorDark.withOpacity(0.7),
               title: const Text('TrackExp'),
+              titleTextStyle: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 32.0,
+              ),
               centerTitle: true,
               elevation: 0.1,
             ),
@@ -48,13 +52,15 @@ class _HomeScreenState extends State<HomeScreen> {
             _currentIndex = index;
           });
         },
+        selectedItemColor: Theme.of(context).primaryColorDark.withOpacity(0.7),
+        selectedFontSize: 16.0,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.category_rounded),
             label: 'Categories',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.currency_exchange_rounded),
+            icon: Icon(Icons.contacts_rounded),
             label: 'Lend/Due',
           ),
         ],

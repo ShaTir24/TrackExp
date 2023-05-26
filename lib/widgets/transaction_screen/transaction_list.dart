@@ -15,10 +15,13 @@ class TransactionList extends StatelessWidget {
         // get the categories
         var list = db.txCategories;
         return ListView.builder(
-            physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
+            physics: const AlwaysScrollableScrollPhysics(
+                parent: ClampingScrollPhysics()),
             itemCount: list.length,
-            itemBuilder: (_, i) => TransactionCard(list[i]));
+            itemBuilder: (_, i) => Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: TransactionCard(list[i]),
+            ));
       },
     );
   }

@@ -12,7 +12,7 @@ class LendingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     Color textColor = (len.category == 'Lend or Given')
         ? Colors.green
-        : ((len.category == 'Gift') ? Colors.black45 : Colors.red);
+        : ((len.category == 'Gift') ? Theme.of(context).primaryColorDark.withOpacity(0.7) : Colors.red);
     return Dismissible(
       key: ValueKey(len.id),
       confirmDismiss: (_) async {
@@ -22,15 +22,33 @@ class LendingCard extends StatelessWidget {
         );
       },
       child: ListTile(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        iconColor: textColor,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Icon(transactions[len.category],
-            color: textColor),
+          child: Icon(transactions[len.category],),
         ),
         title: Text(len.name),
+        titleTextStyle: const TextStyle(
+          fontSize: 20.0,
+          color: Colors.black87,
+        ),
         subtitle: Text(
             "${DateFormat('MMMM dd, yyyy').format(len.date)}\n${len.notes}"),
+        subtitleTextStyle: const TextStyle(
+            fontSize: 16.0,
+            fontStyle: FontStyle.italic
+        ),
         onLongPress: () => {ConfirmBox(len: len)},
+        isThreeLine: true,
+        dense: false,
+        leadingAndTrailingTextStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).primaryColorDark.withOpacity(0.7),
+          fontSize: 20.0,
+        ),
         trailing: Text(
             NumberFormat.currency(locale: 'en_IN', symbol: '₹')
                 .format(len.amount),

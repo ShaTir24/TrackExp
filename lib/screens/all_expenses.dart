@@ -42,7 +42,8 @@ class _AllExpensesState extends State<AllExpenses> {
             builder: (_) => const ExpenseForm(),
           );
         },
-        child: const Icon(Icons.wallet_rounded),
+        backgroundColor: Theme.of(context).primaryColorDark.withOpacity(0.7),
+        child: const Icon(Icons.add_rounded),
       ),
     );
   }

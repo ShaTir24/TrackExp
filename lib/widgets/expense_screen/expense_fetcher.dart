@@ -43,6 +43,9 @@ class _ExpenseFetcherState extends State<ExpenseFetcher> {
                     height: 250.0,
                     child: ExpenseChart(widget.category),
                   ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
                   const Expanded(child: ExpenseList()),
                 ],
               ),

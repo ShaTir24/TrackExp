@@ -13,13 +13,29 @@ class AllNamesList extends StatelessWidget {
         var list = db.names;
         return list.isNotEmpty
             ? ListView.builder(
-                physics: const BouncingScrollPhysics(
+                physics: const ClampingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 itemCount: list.length,
-                itemBuilder: (_, i) => NameCard(list[i]),
+                itemBuilder: (_, i) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: NameCard(list[i]),
+                ),
               )
             : const Center(
-                child: Text('No Entries Found'),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.not_interested_rounded,
+                      size: 150,
+                    ),
+                    Text(
+                      'No Names Found',
+                      style: TextStyle(
+                        fontSize: 25.0,
+                      ),
+                    ),
+                  ],
+                ),
               );
       },
     );

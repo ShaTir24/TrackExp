@@ -36,27 +36,54 @@ class _AllTransactionsFetcherState extends State<AllTransactionsFetcher> {
             return Center(child: Text(snapshot.error.toString()));
           } else {
             return Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 70.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 70.0),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Transactions by Name',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(200, 100, 150, 200),
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Transactions by Name',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(250, 180, 220, 255),
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(AllNames.name);
+                              },
+                              child: const Text('View Names',
+                                style: TextStyle(
+                                  color: Colors.indigo,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),),
+                            ),
+                          ),
+                        ],
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(AllNames.name);
-                        },
-                        child: const Text('View Names'),
-                      ),
-                    ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20.0,
                   ),
                   const TransactionSearch(),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
                   const Expanded(child: AllTransactionsList()),
                 ],
               ),

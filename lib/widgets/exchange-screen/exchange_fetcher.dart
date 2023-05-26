@@ -39,9 +39,15 @@ class _ExchangeFetcherState extends State<ExchangeFetcher> {
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 20.0,
+                  ),
                   SizedBox(
                     height: 250.0,
                     child: ExchangeChart(widget.category),
+                  ),
+                  const SizedBox(
+                    height: 20.0,
                   ),
                   const Expanded(child: ExchangeList()),
                 ],

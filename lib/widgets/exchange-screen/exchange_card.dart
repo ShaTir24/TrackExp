@@ -23,17 +23,33 @@ class ExchangeCard extends StatelessWidget {
         );
       },
       child: ListTile(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        iconColor: textColor,
         leading: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Icon(
             transactions[len.category],
-            color: textColor,
           ),
         ),
         title: Text(len.name),
+        titleTextStyle: const TextStyle(
+          fontSize: 20.0,
+          color: Colors.black87,
+        ),
         subtitle: Text(
             "${DateFormat('MMMM dd, yyyy').format(len.date)}\n${len.notes}"),
-        //subtitle: Text(DateFormat('MMMM dd, yyyy').format(exp.date)),
+        subtitleTextStyle: const TextStyle(
+            fontSize: 18.0,
+            fontStyle: FontStyle.italic
+        ),
+        isThreeLine: true,
+        leadingAndTrailingTextStyle: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).primaryColorDark.withOpacity(0.7),
+          fontSize: 20.0,
+        ),
         onLongPress: () => {ConfirmBox(len: len)},
         trailing: Text(
           NumberFormat.currency(locale: 'en_IN', symbol: '₹')

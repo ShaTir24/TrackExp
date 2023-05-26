@@ -38,38 +38,33 @@ class _ExpenseFormState extends State<ExpenseForm> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<DatabaseProvider>(context, listen: false);
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.6,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.8),
-            spreadRadius: 2,
-            blurRadius: 5,
-          ),
-        ],
-        gradient: const LinearGradient(
-          colors: [Colors.white54, Colors.white70],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 20),
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColorLight.withOpacity(0.5),
         ),
-      ),
-      padding: const EdgeInsets.all(20.0),
-      child: SingleChildScrollView(
         child: Column(
           children: [
+            const Text(
+              "Add an Expense",
+              style: TextStyle(
+                fontSize: 25.0,
+                fontFamily: 'Roboto'
+              ),
+            ),
+            const SizedBox(height: 20.0),
             // title
             TextField(
               controller: _title,
               decoration: InputDecoration(
                 labelText: 'Title of expense',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 20,
                   ),
                   hintText: 'Enter Title',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   )
               ),
             ),
@@ -80,12 +75,12 @@ class _ExpenseFormState extends State<ExpenseForm> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: 'Amount of expense',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 20,
                   ),
                   hintText: 'Enter Amount',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   )
               ),
             ),
@@ -95,12 +90,12 @@ class _ExpenseFormState extends State<ExpenseForm> {
               controller: _notes,
               decoration: InputDecoration(
                 labelText: 'Notes',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 20,
                   ),
                   hintText: 'Enter Note',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   )
               ),
             ),
@@ -144,7 +139,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
                       color: Colors.black,
                     ),
                     elevation: 4,
-                    dropdownColor: Color.fromARGB(220, 255, 255, 255),
+                    dropdownColor: const Color.fromARGB(220, 255, 255, 255),
                     borderRadius: BorderRadius.circular(10.0),
                     value: _initialValue,
                     onChanged: (newValue) {
@@ -161,12 +156,13 @@ class _ExpenseFormState extends State<ExpenseForm> {
               onPressed: () {
                 if (_title.text != '' && _amount.text != '') {
                   // create an expense
+                  DateTime finalDate = DateTime(_date!.year, _date!.month, _date!.day);
                   final file = Expense(
                     id: 0,
                     title: _title.text,
                     amount: double.parse(_amount.text),
                     notes: _notes.text,
-                    date: _date != null ? _date! : DateTime.now(),
+                    date: _date != null ? finalDate : DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
                     category: _initialValue,
                   );
                   // add it to database.
@@ -186,8 +182,11 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 ),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(30),
                   ),
+                ),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Theme.of(context).primaryColorDark.withOpacity(0.7)
                 ),
               ),
             ),

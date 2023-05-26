@@ -16,12 +16,26 @@ class AllExpensesList extends StatelessWidget {
                 physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 itemCount: list.length,
-                itemBuilder: (_, i) => ExpenseCard(list[i]),
+                itemBuilder: (_, i) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ExpenseCard(list[i]),
+                ),
               )
             : const Center(
-                child: Text('No Entries Found'),
+                child: Column(
+                  children: [
+                    Icon(
+                      Icons.not_interested_rounded,
+                      size: 150,
+                    ),
+                    Text('No Expenses Found',
+                      style: TextStyle(
+                        fontSize: 25.0,
+                      ),),
+                  ],
+                ),
               );
-      },
+        },
     );
   }
 }

@@ -41,6 +41,7 @@ dependencies:
   provider: ^6.0.5
   fl_chart: ^0.62.0
   flutter_native_splash: ^2.3.0
+  shared_preferences: ^2.1.1
 
 dev_dependencies:
   flutter_test:

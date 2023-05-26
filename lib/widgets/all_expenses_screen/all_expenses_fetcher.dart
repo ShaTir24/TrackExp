@@ -36,28 +36,58 @@ class _AllExpensesFetcherState extends State<AllExpensesFetcher> {
             return Center(child: Text(snapshot.error.toString()));
           } else {
             return Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 70.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 70.0),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'Day-by-Day Expenses',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(Savings.name);
-                        },
-                        child: const Text('View Day Expense'),
-                      ),
-                    ],
+                  const ExpenseSearch(),
+                  const SizedBox(
+                    height: 20.0,
                   ),
-                  ExpenseSearch(),
-                  Expanded(child: AllExpensesList()),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(200, 100, 150, 200),
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            'Track Daily Expenses',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 20.0),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(250, 180, 220, 255),
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pushNamed(Savings.name);
+                              },
+                              child: const Padding(
+                                padding: EdgeInsets.all(5.0),
+                                child: Text(
+                                  'View Savings',
+                                  style: TextStyle(
+                                    color: Colors.indigo,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20.0,
+                  ),
+                  const Expanded(child: AllExpensesList()),
                 ],
               ),
             );

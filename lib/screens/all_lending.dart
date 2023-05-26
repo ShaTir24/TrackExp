@@ -43,6 +43,7 @@ class _AllLendingState extends State<AllLending> {
             builder: (_) => const LendingForm(),
           );
         },
+        backgroundColor: Theme.of(context).primaryColorDark.withOpacity(0.7),
         child: const Icon(Icons.currency_rupee_rounded),
       ),
     );

@@ -20,12 +20,13 @@ class _ExpenseSearchState extends State<ExpenseSearch> {
       decoration: InputDecoration(
         labelText: 'Search Expenses',
           labelStyle: const TextStyle(
-            fontSize: 20,
+            fontSize: 16,
           ),
           hintText: 'Enter Title',
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          )
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        icon: const Icon(Icons.search_rounded),
       ),
     );
   }

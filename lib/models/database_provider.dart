@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:trackexp/constants/transactions.dart';
@@ -24,14 +25,6 @@ class DatabaseProvider with ChangeNotifier {
 
   void updateDailyLimit(double value) {
     _dailyLimit = value;
-    notifyListeners();
-  }
-
-  double _monthlyLimit = 0.0;
-  double get monthlyLimit => _monthlyLimit;
-
-  void updateMonthlyLimit(double value) {
-    _monthlyLimit = value;
     notifyListeners();
   }
 
@@ -384,17 +377,19 @@ class DatabaseProvider with ChangeNotifier {
 
   Future<List<Expense>> fetchDayExpenses(DateTime current) async {
     _present.clear();
-    final db = await database;
-    return await db.transaction((txn) async {
-      return await txn.rawQuery('SELECT * FROM $eTable WHERE date LIKE ?', ['${current.year}-${current.month}-${current.day}%']).then((data) {
-        final converted = List<Map<String, dynamic>>.from(data);
-        //
-        List<Expense> nList = List.generate(
-            converted.length, (index) => Expense.fromString(converted[index]));
-        _present = nList;
-        return _present;
-      });
-    });
+    _present.addAll(_expenses.where((element) => element.date == current));
+    return _present;
+  }
+
+  Future<void> setLimitValue(double limit) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setDouble('dailyLimit', limit);
+  }
+
+  Future<double> getLimitValue() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    _dailyLimit = prefs.getDouble('dailyLimit')!;
+    return _dailyLimit;
   }
 
   Future<List<Lendings>> fetchTransactions(String category) async {

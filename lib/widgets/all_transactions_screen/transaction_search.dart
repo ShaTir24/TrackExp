@@ -20,12 +20,13 @@ class _TransactionSearchState extends State<TransactionSearch> {
       decoration: InputDecoration(
         labelText: 'Search Transactions',
           labelStyle: const TextStyle(
-            fontSize: 20,
+            fontSize: 16,
           ),
           hintText: 'Enter Name',
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10.0),
-          )
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        icon: const Icon(Icons.search_rounded),
       ),
     );
   }

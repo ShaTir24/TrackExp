@@ -38,38 +38,33 @@ class _LendingFormState extends State<LendingForm> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<DatabaseProvider>(context, listen: false);
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.6,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.8),
-            spreadRadius: 2,
-            blurRadius: 5,
-          ),
-        ],
-        gradient: const LinearGradient(
-          colors: [Colors.white54, Colors.white70],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+    return SingleChildScrollView(
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 35, horizontal: 20),
+        decoration: BoxDecoration(
+          color: Theme.of(context).primaryColorLight.withOpacity(0.5),
         ),
-      ),
-      padding: const EdgeInsets.all(20.0),
-      child: SingleChildScrollView(
         child: Column(
           children: [
+            const Text(
+              "Add a Transaction",
+              style: TextStyle(
+                  fontSize: 25.0,
+                  fontFamily: 'Roboto'
+              ),
+            ),
+            const SizedBox(height: 20.0),
             // title
             TextField(
               controller: _name,
               decoration: InputDecoration(
                   labelText: 'Name of Person',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 20,
                   ),
                   hintText: 'Enter Name',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   )),
             ),
             const SizedBox(height: 20.0),
@@ -79,12 +74,12 @@ class _LendingFormState extends State<LendingForm> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                   labelText: 'Amount of transaction',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 20,
                   ),
                   hintText: 'Enter Amount',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   )),
             ),
             const SizedBox(height: 20.0),
@@ -93,12 +88,12 @@ class _LendingFormState extends State<LendingForm> {
               controller: _notes,
               decoration: InputDecoration(
                   labelText: 'Notes',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 20,
                   ),
                   hintText: 'Enter Note',
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(30.0),
                   )),
             ),
             const SizedBox(height: 20.0),
@@ -142,7 +137,7 @@ class _LendingFormState extends State<LendingForm> {
                     color: Colors.black,
                   ),
                   elevation: 4,
-                  dropdownColor: Color.fromARGB(220, 255, 255, 255),
+                  dropdownColor: const Color.fromARGB(220, 255, 255, 255),
                   borderRadius: BorderRadius.circular(10.0),
                   value: _initialValue,
                   onChanged: (newValue) {
@@ -183,8 +178,11 @@ class _LendingFormState extends State<LendingForm> {
                 ),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(30),
                   ),
+                ),
+                backgroundColor: MaterialStateProperty.all<Color>(
+                    Theme.of(context).primaryColorDark.withOpacity(0.7)
                 ),
               ),
             ),

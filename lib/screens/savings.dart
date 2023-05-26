@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:trackexp/widgets/expense_form.dart';
 import '../widgets/savings_screen/savings_fetcher.dart';
 
 class Savings extends StatefulWidget {
@@ -14,7 +13,6 @@ class Savings extends StatefulWidget {
 }
 
 class _Savings extends State<Savings> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,24 +27,14 @@ class _Savings extends State<Savings> {
             child: AppBar(
               backgroundColor:
                   Theme.of(context).primaryColorDark.withOpacity(0.7),
-              title: const Text('Your Savings'),
+              title: const Text('Today\'s Expense Report'),
               centerTitle: true,
               elevation: 0.1,
             ),
           ),
         ),
       ),
-      body: SavingsFetcher(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (_) => const ExpenseForm(),
-          );
-        },
-        child: const Icon(Icons.add_rounded),
-      ),
+      body: const SavingsFetcher(),
     );
   }
 }

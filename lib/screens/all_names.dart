@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import '../widgets/all_names_screen/all_names_fetcher.dart';
-import '../widgets/lending_form.dart';
 
 class AllNames extends StatefulWidget {
   const AllNames({super.key});
@@ -34,16 +33,6 @@ class _AllNamesState extends State<AllNames> {
         ),
       ),
       body: const AllNamesFetcher(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            builder: (_) => const LendingForm(),
-          );
-        },
-        child: const Icon(Icons.currency_rupee_rounded),
-      ),
     );
   }
 }

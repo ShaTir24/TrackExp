@@ -26,17 +26,20 @@ class _NameCardState extends State<NameCard> {
 
       double diff = totalCredit - totalDebit;
       String message = 'Clear';
-      Color textColor = Colors.lightBlue;
+      Color textColor = Theme.of(context).primaryColorDark.withOpacity(0.7);
+      Color backgroundCol = Theme.of(context).primaryColorLight.withOpacity(0.5);
       IconData disp = Icons.thumb_up_rounded;
       if (diff > 0) {
         message =
             '+${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(diff)}';
         textColor = Colors.green;
+        backgroundCol = Color.fromARGB(200, 180, 255, 180);
         disp = Icons.call_received_rounded;
       } else if (diff < 0) {
         message =
             '${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(diff)}';
         textColor = Colors.red;
+        backgroundCol = Color.fromARGB(200, 255, 180, 180);
         disp = Icons.call_made_rounded;
       }
 
@@ -57,11 +60,22 @@ class _NameCardState extends State<NameCard> {
                   children: [
                     const SizedBox(height: 8.0),
                     ListTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                      tileColor: backgroundCol,
+                      titleAlignment: ListTileTitleAlignment.center,
+                      iconColor: textColor,
                       leading: const Padding(
-                        padding: EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(10.0),
                         child: Icon(Icons.person_rounded),
                       ),
                       title: Text(widget.name),
+                      titleTextStyle: const TextStyle(
+                        fontSize: 20.0,
+                        color: Colors.black87,
+                      ),
                       subtitle: RichText(
                           text: TextSpan(
                               text: 'Transactions:\n',
@@ -81,30 +95,29 @@ class _NameCardState extends State<NameCard> {
                                     fontWeight: FontWeight.bold)),
                             TextSpan(
                                 text:
-                                    "Total Gift (donated): ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(totalGift)}\n",
-                                style: const TextStyle(
-                                    color: Colors.black54,
+                                    "Total Gift (donated): ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(totalGift)}",
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColorDark,
                                     fontWeight: FontWeight.bold)),
-                            // TextSpan(
-                            //     text: '$message\n',
-                            //     style: TextStyle(
-                            //         color: textColor,
-                            //         fontWeight: FontWeight.bold))
                           ])),
-                      trailing: Column(
-                        children: [
-                          Icon(
-                            disp,
-                            color: textColor,
-                          ),
-                          Text(
-                            message,
-                            style: TextStyle(
-                                color: textColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18),
-                          ),
-                        ],
+                      isThreeLine: true,
+                      trailing: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Column(
+                          children: [
+                            Icon(
+                              disp,
+                              color: textColor,
+                            ),
+                            Text(
+                              message,
+                              style: TextStyle(
+                                  color: textColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18),
+                            ),
+                          ],
+                        ),
                       ),
                     )
                   ]),
