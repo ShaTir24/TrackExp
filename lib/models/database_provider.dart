@@ -382,7 +382,7 @@ class DatabaseProvider with ChangeNotifier {
     final db = await database;
     return await db.transaction((txn) async {
       return await txn.query(eTable,
-          where: 'category == ?', whereArgs: [category]).then((data) {
+          where: 'category == ?', orderBy: 'date DESC', whereArgs: [category]).then((data) {
         final converted = List<Map<String, dynamic>>.from(data);
         //
         List<Expense> nList = List.generate(
@@ -411,7 +411,7 @@ class DatabaseProvider with ChangeNotifier {
     final db = await database;
     return await db.transaction((txn) async {
       return await txn.query(lTable,
-          where: 'category == ?', whereArgs: [category]).then((data) {
+          where: 'category == ?', orderBy: 'date DESC', whereArgs: [category]).then((data) {
         final converted = List<Map<String, dynamic>>.from(data);
         List<Lendings> nList = List.generate(
             converted.length, (index) => Lendings.fromString(converted[index]));
@@ -424,7 +424,7 @@ class DatabaseProvider with ChangeNotifier {
   Future<List<String>> fetchPersonNames() async {
     final db = await database;
     return await db.transaction((txn) async {
-      return await txn.query(lTable, distinct: true, columns: ['name']).then(
+      return await txn.query(lTable, distinct: true, columns: ['name'], orderBy: 'date DESC').then(
           (data) {
             final converted = List<Map<String, dynamic>>.from(data);
             List<String> nList = List.generate(
@@ -438,7 +438,7 @@ class DatabaseProvider with ChangeNotifier {
   Future<List<DateTime>> fetchDates() async {
     final db = await database;
     return await db.transaction((txn) async {
-      return await txn.query(eTable, distinct: true, columns: ['date']).then(
+      return await txn.query(eTable, distinct: true, columns: ['date'], orderBy: 'date DESC').then(
           (data) {
             final converted = List<Map<String, dynamic>>.from(data);
             List<DateTime> nList = List.generate(
@@ -465,7 +465,7 @@ class DatabaseProvider with ChangeNotifier {
   Future<List<Lendings>> fetchAllLendings() async {
     final db = await database;
     return await db.transaction((txn) async {
-      return await txn.query(lTable).then((data) {
+      return await txn.query(lTable, orderBy: 'date DESC').then((data) {
         final converted = List<Map<String, dynamic>>.from(data);
         List<Lendings> nList = List.generate(
             converted.length, (index) => Lendings.fromString(converted[index]));

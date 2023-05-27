@@ -48,17 +48,14 @@ class _ExpenseFormState extends State<ExpenseForm> {
           children: [
             const Text(
               "Add an Expense",
-              style: TextStyle(
-                fontSize: 25.0,
-                fontFamily: 'Roboto'
-              ),
+              style: TextStyle(fontSize: 25.0, fontFamily: 'Roboto'),
             ),
             const SizedBox(height: 20.0),
             // title
             TextField(
               controller: _title,
               decoration: InputDecoration(
-                labelText: 'Title of expense',
+                  labelText: 'Title of expense',
                   labelStyle: const TextStyle(
                     fontSize: 20,
                   ),
@@ -66,9 +63,8 @@ class _ExpenseFormState extends State<ExpenseForm> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
                   ),
-                icon: const Icon(Icons.account_balance_wallet_rounded),
-                iconColor: Theme.of(context).primaryColorDark
-              ),
+                  icon: const Icon(Icons.account_balance_wallet_rounded),
+                  iconColor: Theme.of(context).primaryColorDark),
             ),
             const SizedBox(height: 20.0),
             // amount
@@ -76,7 +72,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
               controller: _amount,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                labelText: 'Amount of expense',
+                  labelText: 'Amount of expense',
                   labelStyle: const TextStyle(
                     fontSize: 20,
                   ),
@@ -85,15 +81,14 @@ class _ExpenseFormState extends State<ExpenseForm> {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   icon: const Icon(Icons.currency_rupee_rounded),
-                  iconColor: Theme.of(context).primaryColorDark
-              ),
+                  iconColor: Theme.of(context).primaryColorDark),
             ),
             const SizedBox(height: 20.0),
             // amount
             TextField(
               controller: _notes,
               decoration: InputDecoration(
-                labelText: 'Notes',
+                  labelText: 'Notes',
                   labelStyle: const TextStyle(
                     fontSize: 20,
                   ),
@@ -102,8 +97,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                   icon: const Icon(Icons.notes),
-                  iconColor: Theme.of(context).primaryColorDark
-              ),
+                  iconColor: Theme.of(context).primaryColorDark),
             ),
             const SizedBox(height: 20.0),
             // date picker
@@ -120,14 +114,18 @@ class _ExpenseFormState extends State<ExpenseForm> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30.0),
-                      color: Theme.of(context).primaryColorDark.withOpacity(0.4),
+                      color:
+                          Theme.of(context).primaryColorDark.withOpacity(0.4),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-                      child: Text(_date != null
-                          ? DateFormat('MMMM dd, yyyy').format(_date!)
-                          : 'Select Date',
-                        style: const TextStyle(fontSize: 20.0, color: Colors.black87),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 10.0),
+                      child: Text(
+                        _date != null
+                            ? DateFormat('MMMM dd, yyyy').format(_date!)
+                            : 'Select Date',
+                        style: const TextStyle(
+                            fontSize: 20.0, color: Colors.black87),
                       ),
                     ),
                   ),
@@ -139,7 +137,9 @@ class _ExpenseFormState extends State<ExpenseForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Expanded(child: Text('Category',
+                const Expanded(
+                    child: Text(
+                  'Category',
                   style: TextStyle(fontSize: 20.0, color: Colors.black87),
                 )),
                 Expanded(
@@ -169,18 +169,22 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 ),
               ],
             ),
-            const SizedBox(height: 50.0),
+            const SizedBox(height: 35.0),
             ElevatedButton.icon(
               onPressed: () {
                 if (_title.text != '' && _amount.text != '') {
                   // create an expense
-                  DateTime finalDate = DateTime(_date!.year, _date!.month, _date!.day);
+                  DateTime finalDate =
+                      DateTime(_date!.year, _date!.month, _date!.day);
                   final file = Expense(
                     id: 0,
                     title: _title.text,
                     amount: double.parse(_amount.text),
                     notes: _notes.text,
-                    date: _date != null ? finalDate : DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+                    date: _date != null
+                        ? finalDate
+                        : DateTime(DateTime.now().year, DateTime.now().month,
+                            DateTime.now().day),
                     category: _initialValue,
                   );
                   // add it to database.
@@ -190,10 +194,12 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 }
               },
               icon: const Icon(Icons.add_rounded),
-              label: const Text('Add Expense',
+              label: const Text(
+                'Add Expense',
                 style: TextStyle(
                   fontSize: 20,
-                ),),
+                ),
+              ),
               style: ButtonStyle(
                 padding: MaterialStateProperty.all<EdgeInsets>(
                   const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -204,12 +210,11 @@ class _ExpenseFormState extends State<ExpenseForm> {
                   ),
                 ),
                 backgroundColor: MaterialStateProperty.all<Color>(
-                    Theme.of(context).primaryColorDark.withOpacity(0.7)
-                ),
+                    Theme.of(context).primaryColorDark.withOpacity(0.7)),
               ),
             ),
             const SizedBox(
-              height: 50.0,
+              height: 35.0,
             )
           ],
         ),

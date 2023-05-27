@@ -22,11 +22,12 @@ class _ExpenseSearchState extends State<ExpenseSearch> {
           labelStyle: const TextStyle(
             fontSize: 16,
           ),
+          contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
           hintText: 'Enter Title',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-        icon: const Icon(Icons.search_rounded),
+        prefixIcon: const Icon(Icons.search_rounded),
       ),
     );
   }

@@ -48,7 +48,7 @@ class _SavingsStatsState extends State<SavingsStats> {
                 borderRadius: BorderRadius.circular(30.0),
               ),
               child: Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.all(15.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -89,31 +89,6 @@ class _SavingsStatsState extends State<SavingsStats> {
                                     fontWeight: FontWeight.bold,
                                     color: disp,
                                     fontSize: 20.0)),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromARGB(250, 180, 220, 255),
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(Records.name);
-                          },
-                          child: const Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Text(
-                              'View Past Days\' History',
-                              style: TextStyle(
-                                color: Colors.indigo,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.0,
-                              ),
-                            ),
                           ),
                         ),
                       ),

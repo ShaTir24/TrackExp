@@ -22,11 +22,12 @@ class _TransactionSearchState extends State<TransactionSearch> {
           labelStyle: const TextStyle(
             fontSize: 16,
           ),
-          hintText: 'Enter Name',
+        contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+        hintText: 'Enter Name',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30.0),
           ),
-        icon: const Icon(Icons.search_rounded),
+        prefixIcon: const Icon(Icons.search_rounded),
       ),
     );
   }

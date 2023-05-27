@@ -41,10 +41,7 @@ class _AllExpensesFetcherState extends State<AllExpensesFetcher> {
                 children: [
                   const ExpenseSearch(),
                   const SizedBox(
-                    height: 20.0,
-                  ),
-                  const SizedBox(
-                    height: 20.0,
+                    height: 10.0,
                   ),
                   Container(
                     decoration: BoxDecoration(
@@ -88,7 +85,7 @@ class _AllExpensesFetcherState extends State<AllExpensesFetcher> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20.0,
+                    height: 10.0,
                   ),
                   const Expanded(child: AllExpensesList()),
                 ],

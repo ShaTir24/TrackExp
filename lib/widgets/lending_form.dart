@@ -167,7 +167,7 @@ class _LendingFormState extends State<LendingForm> {
                 ),
               ],
             ),
-            const SizedBox(height: 50.0),
+            const SizedBox(height: 35.0),
             ElevatedButton.icon(
               onPressed: () {
                 if (_name.text != '' && _amount.text != '') {
@@ -206,7 +206,7 @@ class _LendingFormState extends State<LendingForm> {
               ),
             ),
             const SizedBox(
-              height: 50.0,
+              height: 35.0,
             )
           ],
         ),

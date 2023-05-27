@@ -39,6 +39,10 @@ class _AllTransactionsFetcherState extends State<AllTransactionsFetcher> {
               padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 70.0),
               child: Column(
                 children: [
+                  const TransactionSearch(),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
                   Container(
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(200, 100, 150, 200),
@@ -78,11 +82,7 @@ class _AllTransactionsFetcherState extends State<AllTransactionsFetcher> {
                     ),
                   ),
                   const SizedBox(
-                    height: 20.0,
-                  ),
-                  const TransactionSearch(),
-                  const SizedBox(
-                    height: 20.0,
+                    height: 10.0,
                   ),
                   const Expanded(child: AllTransactionsList()),
                 ],
