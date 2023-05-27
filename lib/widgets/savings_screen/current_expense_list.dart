@@ -13,6 +13,8 @@ class CurrentExpenseList extends StatelessWidget {
         var exList = db.present;
         return exList.isNotEmpty
             ? ListView.builder(
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
                 itemCount: exList.length,
                 itemBuilder: (_, i) => Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -26,11 +28,10 @@ class CurrentExpenseList extends StatelessWidget {
                       size: 150,
                       color: Colors.black38,
                     ),
-                    Text('No Expenses Found',
-                      style: TextStyle(
-                          fontSize: 25.0,
-                          color: Colors.black45
-                      ),),
+                    Text(
+                      'No Expenses Found',
+                      style: TextStyle(fontSize: 25.0, color: Colors.black45),
+                    ),
                   ],
                 ),
               );

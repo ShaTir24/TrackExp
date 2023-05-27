@@ -13,7 +13,7 @@ class AllNamesList extends StatelessWidget {
         var list = db.names;
         return list.isNotEmpty
             ? ListView.builder(
-                physics: const ClampingScrollPhysics(
+                physics: const BouncingScrollPhysics(
                     parent: AlwaysScrollableScrollPhysics()),
                 itemCount: list.length,
                 itemBuilder: (_, i) => Padding(

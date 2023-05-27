@@ -21,7 +21,8 @@ class _ExchangeChartState extends State<ExchangeChart> {
       return BarChart(
         BarChartData(
           minY: 0,
-          maxY: maxY,
+          maxY: maxY + 10.0,
+          backgroundColor: Theme.of(context).primaryColorLight.withOpacity(0.5),
           barGroups: [
             ...list.map(
                   (e) => BarChartGroupData(
@@ -30,18 +31,28 @@ class _ExchangeChartState extends State<ExchangeChart> {
                   BarChartRodData(
                     toY: e['amount'],
                     width: 20.0,
-                    borderRadius: BorderRadius.zero,
+                    borderRadius: BorderRadius.circular(10.0),
                   ),
                 ],
               ),
             ),
           ],
+          alignment: BarChartAlignment.spaceEvenly,
+          gridData:
+          FlGridData(
+            drawHorizontalLine: true,
+            drawVerticalLine: false,
+          ),
           titlesData: FlTitlesData(
             topTitles: AxisTitles(
               drawBehindEverything: true,
             ),
             leftTitles: AxisTitles(
               drawBehindEverything: true,
+                sideTitles: SideTitles(
+                    showTitles: true,
+                    reservedSize: 38.0
+                ),
             ),
             rightTitles: AxisTitles(
               drawBehindEverything: true,
@@ -50,7 +61,10 @@ class _ExchangeChartState extends State<ExchangeChart> {
               sideTitles: SideTitles(
                 showTitles: true,
                 getTitlesWidget: (value, _) =>
-                    Text(DateFormat.E().format(list[value.toInt()]['day'])),
+                    Text(DateFormat.E().format(list[value.toInt()]['day']),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),),
               ),
             ),
           ),

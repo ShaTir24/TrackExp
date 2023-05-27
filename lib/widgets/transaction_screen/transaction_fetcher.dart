@@ -44,7 +44,7 @@ class _TransactionFetcherState extends State<TransactionFetcher> {
                   Container(
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(200, 220, 220, 220),
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
                     child: const SizedBox(
                       height: 160.0,

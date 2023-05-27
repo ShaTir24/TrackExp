@@ -44,10 +44,10 @@ class _CategoryFetcherState extends State<CategoryFetcher> {
                   Container(
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(200, 220, 220, 220),
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
                     child: const SizedBox(
-                      height: 220.0,
+                      height: 230.0,
                       child: TotalChart(),
                     ),
                   ),

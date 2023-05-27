@@ -39,12 +39,15 @@ class _ExpenseFetcherState extends State<ExpenseFetcher> {
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
                 children: [
+                  const SizedBox(
+                    height: 20.0
+                  ),
                   SizedBox(
                     height: 250.0,
                     child: ExpenseChart(widget.category),
                   ),
                   const SizedBox(
-                    height: 20.0,
+                    height: 40.0,
                   ),
                   const Expanded(child: ExpenseList()),
                 ],

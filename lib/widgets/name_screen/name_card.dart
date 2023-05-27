@@ -33,13 +33,13 @@ class _NameCardState extends State<NameCard> {
         message =
             '+${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(diff)}';
         textColor = Colors.green;
-        backgroundCol = Color.fromARGB(200, 180, 255, 180);
+        backgroundCol = const Color.fromARGB(200, 180, 255, 180);
         disp = Icons.call_received_rounded;
       } else if (diff < 0) {
         message =
-            '${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(diff)}';
+            NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(diff);
         textColor = Colors.red;
-        backgroundCol = Color.fromARGB(200, 255, 180, 180);
+        backgroundCol = const Color.fromARGB(200, 255, 180, 180);
         disp = Icons.call_made_rounded;
       }
 

@@ -23,45 +23,58 @@ class _TotalChartState extends State<TotalChart> {
           children: [
             Expanded(
               flex: 60,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FittedBox(
-                    alignment: Alignment.center,
-                    fit: BoxFit.scaleDown,
-                    child: Text(
-                      'Total Expenses: ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(total)}',
-                      textScaleFactor: 1.25,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FittedBox(
+                      alignment: Alignment.center,
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'Total Expenses: ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(total)}',
+                        textScaleFactor: 1.25,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 8.0),
-                  ...list.map(
-                    (e) => Padding(
-                      padding: const EdgeInsets.all(3.0),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 8.0,
-                            height: 8.0,
-                            color: Colors.primaries[list.indexOf(e)],
+                    const SizedBox(height: 8.0),
+                    ...list.map(
+                      (e) => Padding(
+                        padding: const EdgeInsets.all(3.0),
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 8.0,
+                                height: 8.0,
+                                color: Colors.primaries[list.indexOf(e)],
+                              ),
+                              const SizedBox(width: 5.0),
+                              Text(
+                                e.title,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              const SizedBox(width: 5.0),
+                              Text(total == 0
+                                  ? '0%'
+                                  : '${((e.totalAmount / total) * 100).toStringAsFixed(2)}%',
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(width: 5.0),
-                          Text(
-                            e.title,
-                          ),
-                          const SizedBox(width: 5.0),
-                          Text(total == 0
-                              ? '0%'
-                              : '${((e.totalAmount / total) * 100).toStringAsFixed(2)}%'),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             Expanded(

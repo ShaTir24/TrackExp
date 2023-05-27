@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/database_provider.dart';
 import 'all_names_list.dart';
-import 'name_search.dart';
 
 class AllNamesFetcher extends StatefulWidget {
   const AllNamesFetcher({super.key});
@@ -35,13 +34,8 @@ class _AllNamesFetcherState extends State<AllNamesFetcher> {
             return Center(child: Text(snapshot.error.toString()));
           } else {
             return const Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 70.0),
-              child: Column(
-                children: [
-                  NameSearch(),
-                  Expanded(child: AllNamesList()),
-                ],
-              ),
+              padding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 70.0),
+              child: AllNamesList(),
             );
           }
         } else {

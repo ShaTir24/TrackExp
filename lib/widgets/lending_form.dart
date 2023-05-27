@@ -65,7 +65,10 @@ class _LendingFormState extends State<LendingForm> {
                   hintText: 'Enter Name',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
-                  )),
+                  ),
+                icon: const Icon(Icons.person_rounded),
+                iconColor: Theme.of(context).primaryColorDark,
+              ),
             ),
             const SizedBox(height: 20.0),
             // amount
@@ -80,7 +83,9 @@ class _LendingFormState extends State<LendingForm> {
                   hintText: 'Enter Amount',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
-                  )),
+                  ),
+                icon: const Icon(Icons.currency_rupee_rounded),
+                iconColor: Theme.of(context).primaryColorDark,),
             ),
             const SizedBox(height: 20.0),
             // amount
@@ -94,22 +99,36 @@ class _LendingFormState extends State<LendingForm> {
                   hintText: 'Enter Note',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
-                  )),
+                  ),
+                icon: const Icon(Icons.notes),
+                iconColor: Theme.of(context).primaryColorDark,),
             ),
             const SizedBox(height: 20.0),
             // date picker
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  _date != null
-                      ? DateFormat('MMMM dd, yyyy').format(_date!)
-                      : 'Select Date',
-                  style: const TextStyle(fontSize: 20.0, color: Colors.black87),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                  child: IconButton(
+                    onPressed: () => _pickDate(),
+                    icon: const Icon(Icons.calendar_month_rounded),
+                  ),
                 ),
-                IconButton(
-                  onPressed: () => _pickDate(),
-                  icon: const Icon(Icons.calendar_month_rounded),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.0),
+                      color: Theme.of(context).primaryColorDark.withOpacity(0.4),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                      child: Text(_date != null
+                          ? DateFormat('MMMM dd, yyyy').format(_date!)
+                          : 'Select Date',
+                        style: const TextStyle(fontSize: 20.0, color: Colors.black87),
+                      ),
+                    ),
+                  ),
                 ),
               ],
             ),

@@ -6,6 +6,7 @@ import '../../models/database_provider.dart';
 
 class ExpenseChart extends StatefulWidget {
   final String category;
+
   const ExpenseChart(this.category, {super.key});
 
   @override
@@ -21,7 +22,8 @@ class _ExpenseChartState extends State<ExpenseChart> {
       return BarChart(
         BarChartData(
           minY: 0,
-          maxY: maxY,
+          maxY: maxY + 10.0,
+          backgroundColor: Theme.of(context).primaryColorLight.withOpacity(0.5),
           barGroups: [
             ...list.map(
               (e) => BarChartGroupData(
@@ -30,18 +32,24 @@ class _ExpenseChartState extends State<ExpenseChart> {
                   BarChartRodData(
                     toY: e['amount'],
                     width: 20.0,
-                    borderRadius: BorderRadius.zero,
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ],
               ),
             ),
           ],
+          alignment: BarChartAlignment.spaceEvenly,
+          gridData: FlGridData(
+            drawHorizontalLine: true,
+            drawVerticalLine: false,
+          ),
           titlesData: FlTitlesData(
             topTitles: AxisTitles(
               drawBehindEverything: true,
             ),
             leftTitles: AxisTitles(
               drawBehindEverything: true,
+              sideTitles: SideTitles(showTitles: true, reservedSize: 38.0),
             ),
             rightTitles: AxisTitles(
               drawBehindEverything: true,
@@ -49,8 +57,10 @@ class _ExpenseChartState extends State<ExpenseChart> {
             bottomTitles: AxisTitles(
               sideTitles: SideTitles(
                 showTitles: true,
-                getTitlesWidget: (value, _) =>
-                    Text(DateFormat.E().format(list[value.toInt()]['day'])),
+                getTitlesWidget: (value, _) => Text(
+                  DateFormat.E().format(list[value.toInt()]['day']),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ),
