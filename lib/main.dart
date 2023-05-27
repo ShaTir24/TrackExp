@@ -4,6 +4,7 @@ import 'package:trackexp/screens/all_lending.dart';
 import 'package:trackexp/screens/all_names.dart';
 import 'package:trackexp/screens/exchange_screen.dart';
 import 'package:trackexp/screens/home_screen.dart';
+import 'package:trackexp/screens/records_screen.dart';
 import 'package:trackexp/screens/savings.dart';
 import 'package:trackexp/screens/transaction_screen.dart';
 import './models/database_provider.dart';
@@ -42,7 +43,8 @@ class _MyAppState extends State<MyApp> {
         TransactionScreen.name: (_) => const TransactionScreen(),
         AllNames.name: (_) => const AllNames(),
         ExchangeScreen.name: (_) => const ExchangeScreen(),
-        Savings.name: (_) => const Savings()
+        Savings.name: (_) => const Savings(),
+        Records.name: (_) => const Records()
       },
     );
   }

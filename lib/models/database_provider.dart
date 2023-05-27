@@ -45,6 +45,9 @@ class DatabaseProvider with ChangeNotifier {
   List<Expense> _present = [];
   List<Expense> get present => _present;
 
+  List<DateTime> _dates = [];
+  List<DateTime> get dates => _dates;
+
   // when the search text is empty, return whole list, else search for the value
   List<Expense> get expenses {
     return _searchText != ''
@@ -360,6 +363,21 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
+  Future<void> getAndDeleteDayExpense(DateTime date) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      await txn.query(eTable, where: 'date = ?', whereArgs: [date]).then ((data) async {
+        final converted = List<Map<String, dynamic>>.from(data);
+        _toDelete = converted;
+        for (var e in _toDelete) {
+          deleteExpense(e['id'], e['category'], double.parse(e['amount']));
+        }
+        _toDelete.clear();
+        _dates.remove(date);
+      });
+    });
+  }
+
   Future<List<Expense>> fetchExpenses(String category) async {
     final db = await database;
     return await db.transaction((txn) async {
@@ -413,6 +431,20 @@ class DatabaseProvider with ChangeNotifier {
               converted.length, (index) => converted[index]['name'] as String);
             _names = nList;
             return _names;
+          });
+    });
+  }
+
+  Future<List<DateTime>> fetchDates() async {
+    final db = await database;
+    return await db.transaction((txn) async {
+      return await txn.query(eTable, distinct: true, columns: ['date']).then(
+          (data) {
+            final converted = List<Map<String, dynamic>>.from(data);
+            List<DateTime> nList = List.generate(
+              converted.length, (index) => DateTime.parse(converted[index]['date']));
+              _dates = nList;
+              return _dates;
           });
     });
   }

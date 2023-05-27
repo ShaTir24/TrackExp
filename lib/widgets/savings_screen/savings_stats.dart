@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../models/database_provider.dart';
+import '../../screens/records_screen.dart';
 
 class SavingsStats extends StatefulWidget {
   const SavingsStats({super.key});
@@ -43,31 +44,8 @@ class _SavingsStatsState extends State<SavingsStats> {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColorDark.withOpacity(0.7),
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Text(
-                  DateFormat('MMMM dd, yyyy').format(DateTime.now()),
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            Container(
-              decoration: BoxDecoration(
                 color: const Color.fromARGB(200, 220, 220, 220),
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(30.0),
               ),
               child: Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -111,6 +89,31 @@ class _SavingsStatsState extends State<SavingsStats> {
                                     fontWeight: FontWeight.bold,
                                     color: disp,
                                     fontSize: 20.0)),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: const Color.fromARGB(250, 180, 220, 255),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(Records.name);
+                          },
+                          child: const Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Text(
+                              'View Past Days\' History',
+                              style: TextStyle(
+                                color: Colors.indigo,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16.0,
+                              ),
+                            ),
                           ),
                         ),
                       ),
