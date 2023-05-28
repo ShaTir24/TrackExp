@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/database_provider.dart';
+import '../all_transactions_screen/transaction_search.dart';
 import 'all_names_list.dart';
 
 class AllNamesFetcher extends StatefulWidget {
@@ -33,9 +34,24 @@ class _AllNamesFetcherState extends State<AllNamesFetcher> {
           if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
           } else {
-            return const Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 70.0),
-              child: AllNamesList(),
+            return Stack(
+              children: [
+                const Positioned(child: Padding(
+                  padding: EdgeInsets.only(
+                      top: 70.0
+                  ),
+                  child: AllNamesList(),
+                )),
+                Positioned(child: Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                        color: Colors.white,
+                        child: const TransactionSearch()),
+                  ),
+                )),
+              ],
             );
           }
         } else {

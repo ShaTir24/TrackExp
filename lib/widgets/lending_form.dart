@@ -48,24 +48,21 @@ class _LendingFormState extends State<LendingForm> {
           children: [
             const Text(
               "Add a Transaction",
-              style: TextStyle(
-                  fontSize: 25.0,
-                  fontFamily: 'Roboto'
-              ),
+              style: TextStyle(fontSize: 25.0, fontFamily: 'Roboto'),
             ),
             const SizedBox(height: 20.0),
             // title
             TextField(
               controller: _name,
               decoration: InputDecoration(
-                  labelText: 'Name of Person',
-                  labelStyle: const TextStyle(
-                    fontSize: 20,
-                  ),
-                  hintText: 'Enter Name',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
+                labelText: 'Name of Person',
+                labelStyle: const TextStyle(
+                  fontSize: 20,
+                ),
+                hintText: 'Enter Name',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
                 icon: const Icon(Icons.person_rounded),
                 iconColor: Theme.of(context).primaryColorDark,
               ),
@@ -76,56 +73,81 @@ class _LendingFormState extends State<LendingForm> {
               controller: _amount,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
-                  labelText: 'Amount of transaction',
-                  labelStyle: const TextStyle(
-                    fontSize: 20,
-                  ),
-                  hintText: 'Enter Amount',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
+                labelText: 'Amount of transaction',
+                labelStyle: const TextStyle(
+                  fontSize: 20,
+                ),
+                hintText: 'Enter Amount',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
                 icon: const Icon(Icons.currency_rupee_rounded),
-                iconColor: Theme.of(context).primaryColorDark,),
+                iconColor: Theme.of(context).primaryColorDark,
+              ),
             ),
             const SizedBox(height: 20.0),
             // amount
             TextField(
               controller: _notes,
               decoration: InputDecoration(
-                  labelText: 'Notes',
-                  labelStyle: const TextStyle(
-                    fontSize: 20,
-                  ),
-                  hintText: 'Enter Note',
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
+                labelText: 'Notes',
+                labelStyle: const TextStyle(
+                  fontSize: 20,
+                ),
+                hintText: 'Enter Note',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
                 icon: const Icon(Icons.notes),
-                iconColor: Theme.of(context).primaryColorDark,),
+                iconColor: Theme.of(context).primaryColorDark,
+              ),
             ),
             const SizedBox(height: 20.0),
             // date picker
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-                  child: IconButton(
-                    onPressed: () => _pickDate(),
-                    icon: const Icon(Icons.calendar_month_rounded),
+                Container(
+                  width: 180,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.0),
+                    color:
+                    Theme.of(context).primaryColorDark.withOpacity(0.4),
                   ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                      color: Theme.of(context).primaryColorDark.withOpacity(0.4),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-                      child: Text(_date != null
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 10.0),
+                    child: Text(
+                      _date != null
                           ? DateFormat('MMMM dd, yyyy').format(_date!)
                           : 'Select Date',
-                        style: const TextStyle(fontSize: 20.0, color: Colors.black87),
+                      style: const TextStyle(
+                          fontSize: 20.0, color: Colors.black87),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                  child: ElevatedButton.icon(
+                    onPressed: () => _pickDate(),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.all(15.0),
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Theme.of(context).primaryColorDark.withOpacity(0.7)),
+                    ),
+                    icon: const Icon(Icons.calendar_month_rounded),
+                    label: const Text(
+                      'Pick Date',
+                      style: TextStyle(
+                        fontSize: 20.0,
                       ),
                     ),
                   ),
@@ -156,8 +178,8 @@ class _LendingFormState extends State<LendingForm> {
                     color: Colors.black,
                   ),
                   elevation: 4,
-                  dropdownColor: const Color.fromARGB(220, 255, 255, 255),
-                  borderRadius: BorderRadius.circular(10.0),
+                  dropdownColor: const Color.fromARGB(200, 255, 255, 255),
+                  borderRadius: BorderRadius.circular(30.0),
                   value: _initialValue,
                   onChanged: (newValue) {
                     setState(() {
@@ -186,14 +208,19 @@ class _LendingFormState extends State<LendingForm> {
                   Navigator.of(context).pop();
                 }
               },
-              icon: const Icon(Icons.add, size: 30,),
-              label: const Text('Add Information',
-              style: TextStyle(
-                fontSize: 20,
-              ),),
+              icon: const Icon(
+                Icons.add,
+                size: 30,
+              ),
+              label: const Text(
+                'Add Information',
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
               style: ButtonStyle(
                 padding: MaterialStateProperty.all<EdgeInsets>(
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  const EdgeInsets.all(15.0),
                 ),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -201,8 +228,7 @@ class _LendingFormState extends State<LendingForm> {
                   ),
                 ),
                 backgroundColor: MaterialStateProperty.all<Color>(
-                    Theme.of(context).primaryColorDark.withOpacity(0.7)
-                ),
+                    Theme.of(context).primaryColorDark.withOpacity(0.7)),
               ),
             ),
             const SizedBox(

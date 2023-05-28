@@ -17,7 +17,7 @@ class AllNamesList extends StatelessWidget {
                     parent: AlwaysScrollableScrollPhysics()),
                 itemCount: list.length,
                 itemBuilder: (_, i) => Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
                   child: NameCard(list[i]),
                 ),
               )

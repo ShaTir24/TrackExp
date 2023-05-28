@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trackexp/widgets/records_screen/records_list.dart';
+import 'package:trackexp/widgets/records_screen/records_search.dart';
 import '../../models/database_provider.dart';
 
 class RecordsFetcher extends StatefulWidget {
@@ -33,9 +34,24 @@ class _RecordsFetcherState extends State<RecordsFetcher> {
           if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
           } else {
-            return const Padding(
-              padding: EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 70.0),
-              child: RecordsList(),
+            return Stack(
+              children: [
+                const Positioned(child: Padding(
+                  padding: EdgeInsets.only(
+                    top: 70.0
+                  ),
+                  child: RecordsList(),
+                )),
+                Positioned(child: Container(
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Container(
+                        color: Colors.white,
+                        child: const RecordsSearch()),
+                  ),
+                )),
+              ],
             );
           }
         } else {

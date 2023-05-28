@@ -59,64 +59,82 @@ class _NameCardState extends State<NameCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 8.0),
-                    ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.3),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
                       ),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                      tileColor: backgroundCol,
-                      titleAlignment: ListTileTitleAlignment.center,
-                      iconColor: textColor,
-                      leading: const Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Icon(Icons.person_rounded),
-                      ),
-                      title: Text(widget.name),
-                      titleTextStyle: const TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black87,
-                      ),
-                      subtitle: RichText(
-                          text: TextSpan(
-                              text: 'Transactions:\n',
-                              style: const TextStyle(color: Colors.black45),
-                              children: <TextSpan>[
-                            TextSpan(
-                                text:
-                                    "Total Credit (to take): ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(totalCredit)}",
-                                style: const TextStyle(
-                                    color: Colors.green,
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text:
-                                    "\nTotal Debit (to give): ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(totalDebit)}\n",
-                                style: const TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold)),
-                            TextSpan(
-                                text:
-                                    "Total Gift (donated): ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(totalGift)}",
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          side: BorderSide(
+                            width: 2.0,
+                            color: textColor,
+                            strokeAlign: 0,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                        tileColor: backgroundCol,
+                        titleAlignment: ListTileTitleAlignment.center,
+                        iconColor: textColor,
+                        leading: const Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Icon(Icons.person_rounded),
+                        ),
+                        title: Text(widget.name),
+                        titleTextStyle: const TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black87,
+                        ),
+                        subtitle: RichText(
+                            text: TextSpan(
+                                text: 'Transactions:\n',
+                                style: const TextStyle(color: Colors.black45),
+                                children: <TextSpan>[
+                              TextSpan(
+                                  text:
+                                      "Total Credit (to take): ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(totalCredit)}",
+                                  style: const TextStyle(
+                                      color: Colors.green,
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text:
+                                      "\nTotal Debit (to give): ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(totalDebit)}\n",
+                                  style: const TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold)),
+                              TextSpan(
+                                  text:
+                                      "Total Gift (donated): ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(totalGift)}",
+                                  style: TextStyle(
+                                      color: Theme.of(context).primaryColorDark,
+                                      fontWeight: FontWeight.bold)),
+                            ])),
+                        isThreeLine: true,
+                        trailing: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Column(
+                            children: [
+                              Icon(
+                                disp,
+                                color: textColor,
+                              ),
+                              Text(
+                                message,
                                 style: TextStyle(
-                                    color: Theme.of(context).primaryColorDark,
-                                    fontWeight: FontWeight.bold)),
-                          ])),
-                      isThreeLine: true,
-                      trailing: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Column(
-                          children: [
-                            Icon(
-                              disp,
-                              color: textColor,
-                            ),
-                            Text(
-                              message,
-                              style: TextStyle(
-                                  color: textColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                          ],
+                                    color: textColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     )

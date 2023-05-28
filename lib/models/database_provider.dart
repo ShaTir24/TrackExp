@@ -21,6 +21,7 @@ class DatabaseProvider with ChangeNotifier {
   }
 
   double _dailyLimit = 0.0;
+
   double get dailyLimit => _dailyLimit;
 
   void updateDailyLimit(double value) {
@@ -37,16 +38,13 @@ class DatabaseProvider with ChangeNotifier {
 
   List<TransactionCategory> get txCategories => _txCategories;
 
-  List<String> _names = [];
-  List<String> get names => _names;
-
   List<Expense> _expenses = [];
 
   List<Expense> _present = [];
+
   List<Expense> get present => _present;
 
   List<DateTime> _dates = [];
-  List<DateTime> get dates => _dates;
 
   // when the search text is empty, return whole list, else search for the value
   List<Expense> get expenses {
@@ -56,6 +54,12 @@ class DatabaseProvider with ChangeNotifier {
                 e.title.toLowerCase().contains(_searchText.toLowerCase()))
             .toList()
         : _expenses;
+  }
+
+  List<DateTime> get dates {
+    return _searchText != ''
+        ? _dates.where((e) => e.toString().contains(_searchText)).toList()
+        : _dates;
   }
 
   List<Lendings> _lending = [];
@@ -70,6 +74,16 @@ class DatabaseProvider with ChangeNotifier {
                 (e) => e.name.toLowerCase().contains(_searchText.toLowerCase()))
             .toList()
         : _lending;
+  }
+
+  List<String> _names = [];
+
+  List<String> get names {
+    return _searchText != ''
+        ? _names
+            .where((e) => e.toLowerCase().contains(_searchText.toLowerCase()))
+            .toList()
+        : _names;
   }
 
   Database? _database;
@@ -313,7 +327,6 @@ class DatabaseProvider with ChangeNotifier {
         var ex = findTxCategory(len.category);
         updateTxCategory(
             len.category, ex.entries + 1, ex.totalAmount + len.amount);
-
       });
     });
   }
@@ -351,11 +364,13 @@ class DatabaseProvider with ChangeNotifier {
   Future<void> getAndDeletePersonData(String name) async {
     final db = await database;
     await db.transaction((txn) async {
-      await txn.query(lTable, where: 'name = ?', whereArgs: [name]).then ((data) async {
+      await txn.query(lTable, where: 'name = ?', whereArgs: [name]).then(
+          (data) async {
         final converted = List<Map<String, dynamic>>.from(data);
         _toDelete = converted;
         for (var e in _toDelete) {
-          deleteLending(e['id'], e['category'], name, double.parse(e['amount']));
+          deleteLending(
+              e['id'], e['category'], name, double.parse(e['amount']));
         }
         _toDelete.clear();
         _names.remove(name);
@@ -366,7 +381,8 @@ class DatabaseProvider with ChangeNotifier {
   Future<void> getAndDeleteDayExpense(DateTime date) async {
     final db = await database;
     await db.transaction((txn) async {
-      await txn.query(eTable, where: 'date = ?', whereArgs: [date]).then ((data) async {
+      await txn.query(eTable,
+          where: 'date = ?', whereArgs: [date.toString()]).then((data) async {
         final converted = List<Map<String, dynamic>>.from(data);
         _toDelete = converted;
         for (var e in _toDelete) {
@@ -382,7 +398,9 @@ class DatabaseProvider with ChangeNotifier {
     final db = await database;
     return await db.transaction((txn) async {
       return await txn.query(eTable,
-          where: 'category == ?', orderBy: 'date DESC', whereArgs: [category]).then((data) {
+          where: 'category == ?',
+          orderBy: 'date DESC',
+          whereArgs: [category]).then((data) {
         final converted = List<Map<String, dynamic>>.from(data);
         //
         List<Expense> nList = List.generate(
@@ -411,7 +429,9 @@ class DatabaseProvider with ChangeNotifier {
     final db = await database;
     return await db.transaction((txn) async {
       return await txn.query(lTable,
-          where: 'category == ?', orderBy: 'date DESC', whereArgs: [category]).then((data) {
+          where: 'category == ?',
+          orderBy: 'date DESC',
+          whereArgs: [category]).then((data) {
         final converted = List<Map<String, dynamic>>.from(data);
         List<Lendings> nList = List.generate(
             converted.length, (index) => Lendings.fromString(converted[index]));
@@ -424,35 +444,41 @@ class DatabaseProvider with ChangeNotifier {
   Future<List<String>> fetchPersonNames() async {
     final db = await database;
     return await db.transaction((txn) async {
-      return await txn.query(lTable, distinct: true, columns: ['name'], orderBy: 'date DESC').then(
-          (data) {
-            final converted = List<Map<String, dynamic>>.from(data);
-            List<String> nList = List.generate(
-              converted.length, (index) => converted[index]['name'] as String);
-            _names = nList;
-            return _names;
-          });
+      return await txn
+          .query(lTable,
+              distinct: true, columns: ['name'], orderBy: 'date DESC')
+          .then((data) {
+        final converted = List<Map<String, dynamic>>.from(data);
+        List<String> nList = List.generate(
+            converted.length, (index) => converted[index]['name'] as String);
+        _names = nList;
+        return _names;
+      });
     });
   }
 
   Future<List<DateTime>> fetchDates() async {
     final db = await database;
     return await db.transaction((txn) async {
-      return await txn.query(eTable, distinct: true, columns: ['date'], orderBy: 'date DESC').then(
-          (data) {
-            final converted = List<Map<String, dynamic>>.from(data);
-            List<DateTime> nList = List.generate(
-              converted.length, (index) => DateTime.parse(converted[index]['date']));
-              _dates = nList;
-              return _dates;
-          });
+      return await txn
+          .query(eTable,
+              distinct: true, columns: ['date'], orderBy: 'date DESC')
+          .then((data) {
+        final converted = List<Map<String, dynamic>>.from(data);
+        List<DateTime> nList = List.generate(converted.length,
+            (index) => DateTime.parse(converted[index]['date']));
+        _dates = nList;
+        return _dates;
+      });
     });
   }
 
   Future<List<Expense>> fetchAllExpenses() async {
     final db = await database;
     return await db.transaction((txn) async {
-      return await txn.rawQuery('SELECT * FROM $eTable ORDER BY date DESC').then((data) {
+      return await txn
+          .rawQuery('SELECT * FROM $eTable ORDER BY date DESC')
+          .then((data) {
         final converted = List<Map<String, dynamic>>.from(data);
         List<Expense> nList = List.generate(
             converted.length, (index) => Expense.fromString(converted[index]));
@@ -524,8 +550,7 @@ class DatabaseProvider with ChangeNotifier {
 
   double calculateDayTotalExpense() {
     return _present.fold(
-      0.0, (previousValue, element) => previousValue + element.amount
-    );
+        0.0, (previousValue, element) => previousValue + element.amount);
   }
 
   double calculateDayExpenses(DateTime weekDay) {

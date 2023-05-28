@@ -58,58 +58,76 @@ class _RecordCardState extends State<RecordCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 8.0),
-                    ListTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
                       ),
-                      contentPadding: const EdgeInsets.symmetric(vertical: 10),
-                      tileColor: backgroundCol,
-                      titleAlignment: ListTileTitleAlignment.center,
-                      iconColor: textColor,
-                      leading: const Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Icon(Icons.calendar_today_rounded),
-                      ),
-                      title: Text(DateFormat('MMMM dd, yyyy').format(widget.date),),
-                      titleTextStyle: const TextStyle(
-                        fontSize: 20.0,
-                        color: Colors.black87,
-                      ),
-                      subtitle: RichText(
-                          text: TextSpan(
-                              text: 'Details:\n',
-                              style: const TextStyle(color: Colors.black45),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text:
-                                    "Daily Limit: ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(dailyLimit)}",
-                                    style: const TextStyle(
-                                        color: Colors.green,
-                                        fontWeight: FontWeight.bold)),
-                                TextSpan(
-                                    text:
-                                    "\nDaily Expense: ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(dayExpense)}",
-                                    style: const TextStyle(
-                                        color: Colors.red,
-                                        fontWeight: FontWeight.bold)),
-                              ])),
-                      isThreeLine: true,
-                      trailing: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Column(
-                          children: [
-                            Icon(
-                              disp,
-                              color: textColor,
-                            ),
-                            Text(
-                              message,
-                              style: TextStyle(
-                                  color: textColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18),
-                            ),
-                          ],
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                          side: BorderSide(
+                            width: 2.0,
+                            color: textColor,
+                            strokeAlign: 0,
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(vertical: 10),
+                        tileColor: backgroundCol,
+                        titleAlignment: ListTileTitleAlignment.center,
+                        iconColor: textColor,
+                        leading: const Padding(
+                          padding: EdgeInsets.all(10.0),
+                          child: Icon(Icons.calendar_today_rounded),
+                        ),
+                        title: Text(DateFormat('MMMM dd, yyyy').format(widget.date),),
+                        titleTextStyle: const TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.black87,
+                        ),
+                        subtitle: RichText(
+                            text: TextSpan(
+                                text: 'Details:\n',
+                                style: const TextStyle(color: Colors.black45),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text:
+                                      "Daily Limit: ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(dailyLimit)}",
+                                      style: const TextStyle(
+                                          color: Colors.green,
+                                          fontWeight: FontWeight.bold)),
+                                  TextSpan(
+                                      text:
+                                      "\nDaily Expense: ${NumberFormat.currency(locale: 'en_IN', symbol: '₹').format(dayExpense)}",
+                                      style: const TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold)),
+                                ])),
+                        isThreeLine: true,
+                        trailing: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Column(
+                            children: [
+                              Icon(
+                                disp,
+                                color: textColor,
+                              ),
+                              Text(
+                                message,
+                                style: TextStyle(
+                                    color: textColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     )

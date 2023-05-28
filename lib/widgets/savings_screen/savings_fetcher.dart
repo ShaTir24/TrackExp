@@ -45,32 +45,10 @@ class _SavingsFetcherState extends State<SavingsFetcher> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            color: const Color.fromARGB(250, 180, 220, 255),
-                            borderRadius: BorderRadius.circular(30.0),
-                          ),
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pushNamed(Records.name);
-                            },
-                            child: const Padding(
-                              padding: EdgeInsets.all(5.0),
-                              child: Text(
-                                'View History',
-                                style: TextStyle(
-                                  color: Colors.indigo,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16.0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                         Row(
                           children: [
                             SizedBox(
-                              width: 120,
+                              width: 100,
                               child: TextField(
                                 controller: _dailyLimit,
                                 keyboardType: TextInputType.number,
@@ -98,7 +76,7 @@ class _SavingsFetcherState extends State<SavingsFetcher> {
                                 borderRadius: BorderRadius.circular(30.0),
                               ),
                               margin: const EdgeInsets.only(
-                                left: 10.0
+                                left: 5.0
                               ),
                               child: TextButton(
                                 onPressed: () {
@@ -139,6 +117,28 @@ class _SavingsFetcherState extends State<SavingsFetcher> {
                               ),
                             ),
                           ],
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(250, 180, 220, 255),
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          child: TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamed(Records.name);
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(5.0),
+                              child: Text(
+                                'View History',
+                                style: TextStyle(
+                                  color: Colors.indigo,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

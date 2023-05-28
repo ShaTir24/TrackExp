@@ -102,30 +102,49 @@ class _ExpenseFormState extends State<ExpenseForm> {
             const SizedBox(height: 20.0),
             // date picker
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
-                  child: IconButton(
-                    onPressed: () => _pickDate(),
-                    icon: const Icon(Icons.calendar_month_rounded),
+                Container(
+                  width: 180,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.0),
+                    color:
+                        Theme.of(context).primaryColorDark.withOpacity(0.4),
+                  ),
+                  alignment: Alignment.center,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15.0, horizontal: 10.0),
+                    child: Text(
+                      _date != null
+                          ? DateFormat('MMMM dd, yyyy').format(_date!)
+                          : 'Select Date',
+                      style: const TextStyle(
+                          fontSize: 20.0, color: Colors.black87),
+                    ),
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.0),
-                      color:
-                          Theme.of(context).primaryColorDark.withOpacity(0.4),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 0.0, 10.0, 0.0),
+                  child: ElevatedButton.icon(
+                    onPressed: () => _pickDate(),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.all(15.0),
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Theme.of(context).primaryColorDark.withOpacity(0.7)),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 15.0, horizontal: 10.0),
-                      child: Text(
-                        _date != null
-                            ? DateFormat('MMMM dd, yyyy').format(_date!)
-                            : 'Select Date',
-                        style: const TextStyle(
-                            fontSize: 20.0, color: Colors.black87),
+                    icon: const Icon(Icons.calendar_month_rounded),
+                    label: const Text(
+                      'Pick Date',
+                      style: TextStyle(
+                        fontSize: 20.0,
                       ),
                     ),
                   ),
@@ -157,8 +176,8 @@ class _ExpenseFormState extends State<ExpenseForm> {
                       color: Colors.black,
                     ),
                     elevation: 4,
-                    dropdownColor: const Color.fromARGB(220, 255, 255, 255),
-                    borderRadius: BorderRadius.circular(10.0),
+                    dropdownColor: const Color.fromARGB(200, 255, 255, 255),
+                    borderRadius: BorderRadius.circular(30.0),
                     value: _initialValue,
                     onChanged: (newValue) {
                       setState(() {
@@ -202,13 +221,14 @@ class _ExpenseFormState extends State<ExpenseForm> {
               ),
               style: ButtonStyle(
                 padding: MaterialStateProperty.all<EdgeInsets>(
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  const EdgeInsets.all(15.0),
                 ),
                 shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
+                enableFeedback: true,
                 backgroundColor: MaterialStateProperty.all<Color>(
                     Theme.of(context).primaryColorDark.withOpacity(0.7)),
               ),

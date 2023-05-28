@@ -17,7 +17,7 @@ class RecordsList extends StatelessWidget {
                     parent: AlwaysScrollableScrollPhysics()),
                 itemCount: list.length,
                 itemBuilder: (_, i) => Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                   child: RecordCard(list[i]),
                 ),
               )
