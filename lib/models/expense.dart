@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Expense {
   final int id; // unique id for every expense
   final String title; // what are we spending on
@@ -34,4 +36,21 @@ class Expense {
       notes: value['notes'],
       date: DateTime.parse(value['date']),
       category: value['category']);
+
+  String getIndex(int col) {
+    switch(col) {
+      case 0:
+        return DateFormat('MMMM dd, yyyy').format(date);
+      case 1:
+        return title;
+      case 2:
+        return category;
+      case 3:
+        return notes;
+      case 4:
+        return NumberFormat.currency(locale: 'en_IN', symbol: 'Rs.').format(amount);
+      default:
+        return '';
+    }
+  }
 }

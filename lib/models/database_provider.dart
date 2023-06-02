@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:printing/printing.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -8,6 +11,8 @@ import '../constants/icons.dart';
 import './ex_category.dart';
 import './expense.dart';
 import 'lendings.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:pdf/pdf.dart';
 
 class DatabaseProvider with ChangeNotifier {
   String _searchText = '';
@@ -566,6 +571,14 @@ class DatabaseProvider with ChangeNotifier {
     return total;
   }
 
+  double calculateExpenses() {
+    double total = 0.0;
+    for (int i = 0; i < _dates.length; i++) {
+      total += calculateDayExpenses(_dates[i]);
+    }
+    return total;
+  }
+
   List<Map<String, dynamic>> calculateWeekExpenses() {
     List<Map<String, dynamic>> data = [];
 
@@ -609,4 +622,194 @@ class DatabaseProvider with ChangeNotifier {
     // return the list
     return data;
   }
+
+  //PDF generation
+  final PdfColor baseColor = PdfColor.fromHex('#065785F5');
+  final PdfColor accentColor = PdfColors.blueGrey900;
+
+  static const _darkColor = PdfColors.blueGrey800;
+  static const _lightColor = PdfColors.blueGrey100;
+
+  PdfColor get _accentTextColor => baseColor.isLight ? _lightColor : _darkColor;
+
+  double get _totalExp =>
+      _expenses.map<double>((p) => p.amount).reduce((a, b) => a + b);
+
+  Future<Uint8List> generatePdf(PdfPageFormat format) async {
+    final pdf = pw.Document();
+    // final databasePath = await getDatabasesPath();
+    // final database = await openDatabase('$databasePath/expense_tc.db');
+    // final tableData = await database.query(eTable);
+
+    //generating pdf content
+    pdf.addPage(
+      pw.MultiPage(
+        pageTheme: _buildTheme(
+          format,
+          await PdfGoogleFonts.robotoRegular(),
+          await PdfGoogleFonts.robotoBold(),
+          await PdfGoogleFonts.robotoItalic(),
+        ),
+        header: _buildHeader,
+        build: (context) => [
+          _contentHeader(context),
+          _contentTable(context),
+          pw.SizedBox(height: 20),
+        ],
+        footer: _buildFooter,
+      ),
+    );
+    //return the pdf file content
+    return pdf.save();
+  }
+
+  pw.Widget _buildHeader(pw.Context context) {
+    return pw.Column(
+      children: [
+        pw.Container(
+          height: 50,
+          alignment: pw.Alignment.center,
+          child: pw.Text(
+            'Expense List',
+            style: pw.TextStyle(
+              color: baseColor,
+              fontWeight: pw.FontWeight.bold,
+              fontSize: 35,
+            ),
+          ),
+        ),
+        pw.Container (
+          padding: const pw.EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+          child: pw.Row(
+          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: pw.CrossAxisAlignment.center,
+          children: [
+            pw.Text('TrackExp',
+              style: const pw.TextStyle(
+                fontSize: 14,
+                color: PdfColors.black,
+              ),),
+            pw.Text('Date: ${DateFormat('MMMM dd, yyyy').format(DateTime.now())}',
+              style: const pw.TextStyle(
+                fontSize: 14,
+                color: PdfColors.black,
+              ),),
+          ],
+        ),
+        ),
+        if (context.pageNumber > 1) pw.SizedBox(height: 20)
+      ],
+    );
+  }
+
+  pw.Widget _buildFooter(pw.Context context) {
+    return pw.Row(
+      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: pw.CrossAxisAlignment.end,
+      children: [
+        pw.Text(
+          'Page ${context.pageNumber}/${context.pagesCount}',
+          style: const pw.TextStyle(
+            fontSize: 12,
+            color: PdfColors.black,
+          ),
+        ),
+        pw.Text(
+          '© Copyright, 2023 - Tirth Shah',
+          style: const pw.TextStyle(
+            fontSize: 12,
+            color: PdfColors.grey700,
+          ),
+        ),
+      ],
+    );
+  }
+
+  pw.PageTheme _buildTheme(
+      PdfPageFormat pageFormat, pw.Font base, pw.Font bold, pw.Font italic) {
+    return pw.PageTheme(
+      pageFormat: pageFormat,
+      theme: pw.ThemeData.withFont(
+        base: base,
+        bold: bold,
+        italic: italic,
+      ),
+    );
+  }
+
+  pw.Widget _contentHeader(pw.Context context) {
+    return pw.Container(
+      margin: const pw.EdgeInsets.symmetric(horizontal: 20),
+      alignment: pw.Alignment.center,
+      height: 45,
+      child: pw.FittedBox(
+        child: pw.Text(
+          'Total: ${NumberFormat.currency(locale: 'en_IN', symbol: 'Rs.').format(_totalExp)}',
+          style: pw.TextStyle(
+            color: baseColor,
+            fontStyle: pw.FontStyle.italic,
+            fontSize: 25
+          ),
+        ),
+      ),
+    );
+  }
+
+  pw.Widget _contentTable(pw.Context context) {
+    const tableHeaders = [
+      'Date',
+      'Title',
+      'Category',
+      'Notes',
+      'Amount'
+    ];
+
+    return pw.TableHelper.fromTextArray(
+      border: null,
+      cellAlignment: pw.Alignment.centerLeft,
+      headerDecoration: pw.BoxDecoration(
+        borderRadius: const pw.BorderRadius.all(pw.Radius.circular(2)),
+        color: baseColor,
+      ),
+      headerHeight: 25,
+      cellHeight: 40,
+      cellAlignments: {
+        0: pw.Alignment.centerLeft,
+        1: pw.Alignment.centerLeft,
+        2: pw.Alignment.centerLeft,
+        3: pw.Alignment.centerLeft,
+        4: pw.Alignment.centerRight,
+      },
+      headerStyle: pw.TextStyle(
+        color: _accentTextColor,
+        fontSize: 12,
+        fontWeight: pw.FontWeight.bold,
+      ),
+      cellStyle: const pw.TextStyle(
+        color: _darkColor,
+        fontSize: 10,
+      ),
+      rowDecoration: pw.BoxDecoration(
+        border: pw.Border(
+          bottom: pw.BorderSide(
+            color: accentColor,
+            width: .5,
+          ),
+        ),
+      ),
+      headers: List<String>.generate(
+        tableHeaders.length,
+            (col) => tableHeaders[col],
+      ),
+      data: List<List<String>>.generate(
+        _expenses.length,
+            (row) => List<String>.generate(
+          tableHeaders.length,
+              (col) => _expenses[row].getIndex(col),
+        ),
+      ),
+    );
+  }
+
 }
+

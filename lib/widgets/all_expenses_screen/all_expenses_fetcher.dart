@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:trackexp/screens/printing_screen.dart';
 import '../../models/database_provider.dart';
 import '../../screens/savings.dart';
 import './all_expenses_list.dart';
@@ -36,7 +37,7 @@ class _AllExpensesFetcherState extends State<AllExpensesFetcher> {
             return Center(child: Text(snapshot.error.toString()));
           } else {
             return Padding(
-              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 70.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 50.0),
               child: Column(
                 children: [
                   const ExpenseSearch(),
@@ -88,6 +89,33 @@ class _AllExpensesFetcherState extends State<AllExpensesFetcher> {
                     height: 10.0,
                   ),
                   const Expanded(child: AllExpensesList()),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(PrintingScreen.name);
+                      },
+                      icon: const Icon(Icons.picture_as_pdf_rounded),
+                      label: const Text(
+                        "Generate PDF",
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                    style: ButtonStyle(
+                      padding: MaterialStateProperty.all<EdgeInsets>(
+                        const EdgeInsets.all(15.0),
+                      ),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Theme.of(context).primaryColorDark.withOpacity(0.7)),
+                    ),
+                  )
                 ],
               ),
             );
